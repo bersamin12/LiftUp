@@ -66,6 +66,14 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = async () => {
     const nextPath = role === 'resident' ? '/home' : '/coordinator';
+    // Supabase only preserves query params on `redirectTo` if that exact URL
+    // is allow-listed in the project's Redirect URLs setting — if it isn't,
+    // ?role=/&next= silently gets dropped and the callback falls back to
+    // "resident". A cookie survives regardless, since it isn't subject to
+    // that allow-list check at all.
+    document.cookie = `oauth_role=${role}; path=/; max-age=600; SameSite=Lax`;
+    document.cookie = `oauth_next=${encodeURIComponent(nextPath)}; path=/; max-age=600; SameSite=Lax`;
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {

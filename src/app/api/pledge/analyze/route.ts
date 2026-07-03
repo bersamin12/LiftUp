@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Server configuration error (OpenRouter Key)' }, { status: 500 });
     }
 
-    // Call OpenRouter VLM (xiaomi/mimo-v2.5)
+    // Call OpenRouter VLM (qwen/qwen3.5-27b)
     // We expect structured JSON back.
     const prompt = `Analyze this image of an item meant for a donation drive.
 Return ONLY a raw JSON object with the following keys:
@@ -49,7 +49,7 @@ Example output:
 Do not include any markdown formatting like \`\`\`json. Return just the JSON string.`;
 
     const payload = {
-      model: 'xiaomi/mimo-v2.5',
+      model: 'qwen/qwen3.5-27b',
       messages: [
         {
           role: 'user',

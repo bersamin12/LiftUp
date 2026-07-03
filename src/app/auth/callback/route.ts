@@ -6,12 +6,22 @@ import { ensureProfile } from '@/app/actions/auth';
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
-  const role = (searchParams.get('role') || 'resident') as 'resident' | 'organization';
-  // if "next" is in param, use it as the redirect URL
-  const next = searchParams.get('next') ?? (role === 'organization' ? '/coordinator' : '/home');
+  const cookieStore = await cookies();
+
+  // Prefer the cookie set right before the OAuth redirect — query params on
+  // `redirectTo` only survive if that exact URL is allow-listed in Supabase's
+  // Redirect URLs setting, so they can silently drop. The cookie doesn't
+  // depend on that allow-list at all.
+  const role = (cookieStore.get('oauth_role')?.value || searchParams.get('role') || 'resident') as 'resident' | 'organization';
+  const rawNext = cookieStore.get('oauth_next')?.value
+    ? decodeURIComponent(cookieStore.get('oauth_next')!.value)
+    : searchParams.get('next');
+  const next = rawNext ?? (role === 'organization' ? '/coordinator' : '/home');
+
+  cookieStore.delete('oauth_role');
+  cookieStore.delete('oauth_next');
 
   if (code) {
-    const cookieStore = await cookies();
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
