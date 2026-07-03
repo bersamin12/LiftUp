@@ -1,0 +1,333 @@
+/* ─────────────────────────────────────────────────────────────────
+   DoorDrive Global Design System
+   Extracted from the LiftUp Community Noticeboard prototype (1B)
+   ───────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  /* Brand colours */
+  --teal:           #14746f;
+  --teal-dark:      #0f5651;
+  --teal-darker:    #0f766e;
+  --teal-light-bg:  #eef4f2;
+  --teal-border:    #cfe3dd;
+  --teal-pale:      #bfe0da;
+
+  --amber:          #d98a3d;
+  --amber-dark:     #b96f28;
+  --amber-pale:     #fbe6cd;
+
+  --rust:           #c65a34;
+  --rust-dark:      #b8562f;
+  --rust-deeper:    #a5462a;
+
+  /* Neutrals */
+  --cream-bg:       #f6f4ef;
+  --off-white:      #fbf7ee;
+  --warm-tan:       #f3ede0;
+  --canvas-bg:      #e6ede8;
+  --card-white:     #fff;
+  --card-border:    #ecece6;
+  --segment-track:  #eceae3;
+  --input-border:   #e2ddd3;
+  --chip-border:    #d9d4ca;
+  --progress-track: #eeeae2;
+  --locked-bg:      #efeadd;
+  --locked-border:  #cfc6b2;
+  --locked-icon:    #c2b8a1;
+
+  /* Text */
+  --text-dark:      #1f2b27;
+  --text-mid:       #6f7a74;
+  --text-muted:     #9a938a;
+  --text-teal:      #14746f;
+  --text-rust:      #c65a34;
+
+  /* Status */
+  --green-success:  #2f8f6a;
+  --pending-bg:     #f1efe9;
+  --pending-text:   #a4967d;
+  --warn-bg:        #fff8ef;
+  --warn-border:    #f0d9b8;
+  --warn-text:      #8a6a4a;
+
+  /* Device chrome */
+  --device-border:  #26302c;
+
+  /* Typography */
+  --font-ui:        'Nunito', system-ui, sans-serif;
+  --font-serif:     'Bitter', Georgia, serif;
+  --font-mono:      'Courier New', monospace;
+
+  /* Radii */
+  --r-card:    16px;
+  --r-input:   13px;
+  --r-btn:     14px;
+  --r-chip:    999px;
+  --r-screen:  42px;
+
+  /* Layout */
+  --screen-pad-x: 22px;
+
+  /* Shadows */
+  --shadow-card:  0 10px 24px -16px rgba(20,40,35,.3);
+  --shadow-btn-teal:   0 8px 18px -8px rgba(20,116,111,.7);
+  --shadow-btn-amber:  0 8px 18px -8px rgba(217,138,61,.7);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-ui);
+  background: var(--canvas-bg);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Keyframe animations (from prototype) ─────────────────────── */
+@keyframes scan {
+  0%   { transform: translateY(-6px); opacity: .9; }
+  100% { transform: translateY(150px); opacity: 0; }
+}
+@keyframes shim {
+  0%   { background-position: -260px 0; }
+  100% { background-position:  260px 0; }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+@keyframes pop {
+  0%   { transform: scale(.6); opacity: 0; }
+  70%  { transform: scale(1.08); }
+  100% { transform: scale(1);   opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -260px 0; }
+  100% { background-position:  260px 0; }
+}
+@keyframes popRotate {
+  0%   { transform: scale(.6) rotate(-15deg); opacity: 0; }
+  70%  { transform: scale(1.08) rotate(5deg); }
+  100% { transform: scale(1) rotate(-5deg); opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* ─── Utility helpers ───────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.fade-in {
+  animation: fadeIn .35s ease-out both;
+}
+
+.pop-rotate {
+  animation: popRotate .6s ease-out;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--card-border) 25%, #f5f3ee 37%, var(--card-border) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--r-card);
+}
+
+.landing-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 720px) {
+  .landing-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Segmented toggle (e.g. resident/coordinator role switch) ─── */
+.segment-toggle {
+  display: flex;
+  background: var(--segment-track);
+  border-radius: var(--r-chip);
+  padding: 5px;
+  gap: 5px;
+}
+.segment {
+  flex: 1;
+  text-align: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font: 700 13px var(--font-ui);
+  padding: 10px 0;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+.segment.active {
+  background: #fff;
+  color: var(--text-dark);
+  font-weight: 800;
+  box-shadow: 0 4px 10px -6px rgba(20,40,35,.4);
+}
+
+/* ─── Phone-frame screen wrapper ───────────────────────────────── */
+/* The app is mobile-first by design: a single centered phone-width
+   column on every viewport, with a soft floating-card treatment on
+   larger screens rather than a separate desktop layout. */
+.phone-screen {
+  width: 100%;
+  min-height: 100dvh;
+  max-width: 390px;
+  margin: 0 auto;
+  background: var(--cream-bg);
+  position: relative;
+  overflow-x: hidden;
+}
+@media (min-width: 480px) {
+  .phone-screen {
+    min-height: calc(100dvh - 48px);
+    margin: 24px auto;
+    border-radius: 28px;
+    box-shadow: 0 30px 60px -30px rgba(20, 40, 35, .35);
+  }
+}
+@media (max-width: 359px) {
+  :root { --screen-pad-x: 16px; }
+}
+
+/* ─── Primary buttons ───────────────────────────────────────────── */
+.btn-primary {
+  border: none;
+  width: 100%;
+  background: var(--teal);
+  color: #fff;
+  font: 800 16px/1 var(--font-ui);
+  padding: 16px;
+  border-radius: var(--r-btn);
+  cursor: pointer;
+  box-shadow: var(--shadow-btn-teal);
+  transition: opacity .15s;
+}
+.btn-primary:hover  { opacity: .9; }
+.btn-primary:active { opacity: .8; }
+
+.btn-amber {
+  border: none;
+  width: 100%;
+  background: var(--amber);
+  color: #fff;
+  font: 800 16px/1 var(--font-ui);
+  padding: 15px;
+  border-radius: var(--r-btn);
+  cursor: pointer;
+  box-shadow: var(--shadow-btn-amber);
+  transition: opacity .15s;
+}
+
+.btn-ghost {
+  border: 1.5px solid var(--teal);
+  background: #fff;
+  color: var(--teal);
+  font: 800 15px/1 var(--font-ui);
+  padding: 14px;
+  border-radius: var(--r-btn);
+  cursor: pointer;
+  width: 100%;
+  transition: background .15s;
+}
+.btn-ghost:hover { background: var(--teal-light-bg); }
+
+/* ─── Bottom nav bar ────────────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  max-width: 390px;
+  height: 68px;
+  background: #fff;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 30px;
+  z-index: 100;
+}
+
+/* ─── Verified badge ────────────────────────────────────────────── */
+.verified-badge {
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  background: var(--teal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.verified-badge::after {
+  content: '';
+  width: 4px; height: 8px;
+  border: solid #fff;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+  margin-top: -1px;
+}
+
+/* ─── Category / condition chips ────────────────────────────────── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 13px;
+  border-radius: var(--r-chip);
+  font: 700 12px var(--font-ui);
+  cursor: pointer;
+  transition: all .15s;
+  border: 1.5px solid var(--chip-border);
+  background: #fff;
+  color: var(--text-mid);
+}
+.chip.selected {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+  font-weight: 800;
+}
+.chip.selected-amber {
+  background: var(--amber);
+  color: #fff;
+  border-color: var(--amber);
+  font-weight: 800;
+}
+
+/* ─── Progress bar ──────────────────────────────────────────────── */
+.progress-bar-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--progress-track);
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--amber);
+  transition: width .3s ease;
+}
