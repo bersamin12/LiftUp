@@ -19,6 +19,7 @@ type Stat = {
   label: string;
   detail: string;
   source: string;
+  sourceUrl?: string;
 };
 
 type IconName = 'shirt' | 'house' | 'warning' | 'heart' | 'target' | 'box' | 'door' | 'pin' | 'ribbon' | 'loop' | 'flyer' | 'question' | 'camera';
@@ -89,15 +90,17 @@ const WASTE_STATS: Stat[] = [
     icon: 'shirt',
     number: '3%',
     label: 'of textile & leather waste is recycled',
-    detail: '231,000 tonnes generated in 2025, only 6,000 tonnes recycled',
-    source: 'NEA, Waste Statistics & Overall Recycling, 2025',
+    detail: '206,000 tonnes generated in 2024, only 7,000 tonnes recycled',
+    source: 'NEA, Waste Statistics & Overall Recycling, 2024',
+    sourceUrl: 'https://www.nea.gov.sg/our-services/waste-management/waste-statistics-and-overall-recycling',
   },
   {
     icon: 'house',
     number: '11%',
     label: 'household recycling rate',
     detail: 'vs. 67% for the non-domestic (commercial) sector',
-    source: 'NEA, Waste Statistics & Overall Recycling, 2025',
+    source: 'NEA, Waste Statistics & Overall Recycling, 2024',
+    sourceUrl: 'https://www.nea.gov.sg/our-services/waste-management/waste-statistics-and-overall-recycling',
   },
   {
     icon: 'warning',
@@ -105,6 +108,7 @@ const WASTE_STATS: Stat[] = [
     label: 'Semakau Landfill runs out of space',
     detail: "Singapore's only landfill, at current disposal rates",
     source: 'Ministry of Sustainability & the Environment, Jan 2024',
+    sourceUrl: 'https://www.mse.gov.sg/',
   },
 ];
 
@@ -115,6 +119,7 @@ const LOOP_STATS: Stat[] = [
     label: 'households needed ComCare assistance in 2023',
     detail: 'real families a working reuse economy could directly help',
     source: 'MSF, Supporting Lower-Income Households Trends Report, 2024',
+    sourceUrl: 'https://www.msf.gov.sg/research-data/research-reports-data',
   },
   {
     icon: 'target',
@@ -122,6 +127,7 @@ const LOOP_STATS: Stat[] = [
     label: "Singapore's 2030 household recycling target",
     detail: "nearly 3x today's rate. LiftUp is built for this exact goal",
     source: 'MSE / NEA, Zero Waste Masterplan',
+    sourceUrl: 'https://www.towardszerowaste.gov.sg/',
   },
   {
     icon: 'box',
@@ -129,6 +135,7 @@ const LOOP_STATS: Stat[] = [
     label: 'of food redistributed a year by Food Bank Singapore',
     detail: 'proof large-scale redistribution already works here',
     source: 'Food Bank Singapore',
+    sourceUrl: 'https://foodbank.sg/about/',
   },
 ];
 
@@ -192,7 +199,19 @@ function StatCard({ stat, delay, accent, tint }: { stat: Stat; delay: number; ac
       <div style={{ font: '800 15px var(--font-ui)', color: 'var(--text-dark)', marginTop: 12 }}>{stat.label}</div>
       <div style={{ font: '700 13px var(--font-ui)', color: 'var(--text-mid)', marginTop: 6, lineHeight: 1.45 }}>{stat.detail}</div>
       <div style={{ height: 1, background: 'var(--card-border)', margin: '16px 0 12px' }} />
-      <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.2px' }}>{stat.source}</div>
+      {stat.sourceUrl ? (
+        <a
+          href={stat.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 5, font: '800 11px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.2px', textDecoration: 'none' }}
+        >
+          {stat.source}
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" style={{ flex: '0 0 auto' }}><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+        </a>
+      ) : (
+        <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.2px' }}>{stat.source}</div>
+      )}
     </div>
   );
 }
