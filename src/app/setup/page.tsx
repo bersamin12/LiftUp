@@ -23,7 +23,11 @@ export default async function SetupPage() {
     redirect('/home');
   }
 
-  const { data: blocks } = await (db.from('blocks') as any).select('*').order('street_name');
+  const { data: blocks, error: blocksErr } = await (db.from('blocks') as any).select('*').order('street_name');
+
+  if (blocksErr) {
+    console.error('Failed to fetch blocks:', blocksErr.message);
+  }
 
   return (
     <AppScreen style={{ padding: '40px 22px' }}>
@@ -33,6 +37,12 @@ export default async function SetupPage() {
       <p style={{ font: '700 14px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 24 }}>
         Let&apos;s get you set up. Which block do you live in?
       </p>
+
+      {blocksErr && (
+        <div style={{ background: '#fee', border: '1px solid #f99', borderRadius: 12, padding: 14, marginBottom: 16, font: '700 13px var(--font-ui)', color: '#900' }}>
+          Couldn&apos;t load blocks: {blocksErr.message}
+        </div>
+      )}
 
       <BlockSelect blocks={blocks || []} residentId={user.id} />
     </AppScreen>
