@@ -18,35 +18,50 @@ export async function GET(request: Request) {
     : searchParams.get('next');
   const next = rawNext ?? (role === 'organization' ? '/coordinator' : '/home');
 
+  // If Google/Supabase returned an OAuth error, surface it instead of a code.
+  const oauthError = searchParams.get('error_description') || searchParams.get('error');
+
   cookieStore.delete('oauth_role');
   cookieStore.delete('oauth_next');
 
-  if (code) {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll();
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            );
-          },
-        },
-      }
-    );
+  // Short reason code carried in the redirect URL so a failure is diagnosable
+  // from the address bar (no server-log access needed).
+  const fail = (reason: string) =>
+    NextResponse.redirect(`${origin}/?error=auth-callback-failed&reason=${encodeURIComponent(reason)}`);
 
-    const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error && session?.user) {
-      // Create profile based on requested role
-      await ensureProfile(role, session.user.email || '');
-      return NextResponse.redirect(`${origin}${next}`);
+  if (oauthError) {
+    console.error('[auth-callback] oauth provider error:', oauthError);
+    return fail(`oauth:${oauthError}`.slice(0, 80));
+  }
+  if (!code) return fail('no-code');
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          );
+        },
+      },
     }
+  );
+
+  const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code);
+  if (error || !session?.user) {
+    console.error('[auth-callback] exchange failed:', error?.message);
+    return fail(`exchange:${error?.message || 'no-session'}`.slice(0, 80));
   }
 
-  // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/?error=auth-callback-failed`);
+  try {
+    await ensureProfile(role, session.user.email || '');
+  } catch (e) {
+    console.error('[auth-callback] ensureProfile threw', e);
+  }
+  return NextResponse.redirect(`${origin}${next}`);
 }

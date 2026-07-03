@@ -75,6 +75,17 @@ export default function LoginPage() {
     document.cookie = `oauth_role=${role}; path=/; max-age=600; SameSite=Lax`;
     document.cookie = `oauth_next=${encodeURIComponent(nextPath)}; path=/; max-age=600; SameSite=Lax`;
 
+    // Clear any lingering session / PKCE state before starting a new OAuth flow.
+    // Without this, a stale auth cookie left over from a previous login (e.g. a
+    // resident who just logged out) makes the server-side exchangeCodeForSession
+    // fail on the first coordinator attempt, bouncing the user to the landing
+    // page; it only works on the second try once that stale state is cleared.
+    try {
+      await supabase.auth.signOut({ scope: 'local' });
+    } catch {
+      // non-fatal: proceed with a fresh OAuth flow regardless
+    }
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
