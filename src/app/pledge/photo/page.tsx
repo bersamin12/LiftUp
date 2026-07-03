@@ -208,7 +208,7 @@ function PhotoPledgeContent() {
 
             {selectedCategory === 'Electronics' && (
               <Callout tone="amber" style={{ marginTop: 10 }}>
-                <b>Electronics:</b> photos can&apos;t confirm if it still powers on — please tag condition honestly.
+                <b>Electronics:</b> photos can&apos;t confirm if it still powers on, so please tag condition honestly.
               </Callout>
             )}
           </div>

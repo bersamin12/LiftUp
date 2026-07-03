@@ -152,7 +152,7 @@ export default function QueuePage({ params }: { params: Promise<{ id: string }> 
 
                     {decliningId === pledge.id && (
                       <div style={{ marginTop: 16, background: '#fff', borderTop: '1px solid var(--card-border)', paddingTop: 16 }}>
-                        <div style={{ font: '800 10px var(--font-ui)', color: 'var(--rust)', marginBottom: 7 }}>DECLINE — PICK A REASON</div>
+                        <div style={{ font: '800 10px var(--font-ui)', color: 'var(--rust)', marginBottom: 7 }}>DECLINE · PICK A REASON</div>
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
                           {declineReasons.map(reason => (
                             <span

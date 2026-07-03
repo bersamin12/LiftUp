@@ -57,7 +57,7 @@ export default function OrgSetupPage() {
 
       <div style={{ margin: '16px 22px 0' }}>
         <Callout tone="amber">
-          Residents see a verified badge once we approve you — usually within 1–2 days.
+          Residents see a verified badge once we approve you, usually within 1-2 days.
         </Callout>
       </div>
 

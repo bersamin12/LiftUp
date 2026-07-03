@@ -1,5 +1,17 @@
 import Link from 'next/link';
 import type { ReactNode, CSSProperties } from 'react';
+import DemandHeatmap from '@/components/DemandHeatmap';
+import CategoryBar from '@/components/CategoryBar';
+
+// Sample Yishun blocks (real coordinates) for the landing demand-map preview.
+type SampleBlock = { block_id: string; block_number: string; street_name: string; lat: number; lng: number; interestCount: number; categoryBreakdown: Record<string, number> };
+const SAMPLE_DEMAND_BLOCKS: SampleBlock[] = [
+  { block_id: 's1', block_number: '110', street_name: 'Yishun Ring Rd', lat: 1.4325, lng: 103.8298, interestCount: 6, categoryBreakdown: { Clothing: 4, Toys: 2 } },
+  { block_id: 's2', block_number: '101', street_name: 'Yishun Ave 5',   lat: 1.4305, lng: 103.8277, interestCount: 5, categoryBreakdown: { Clothing: 3, Books: 2 } },
+  { block_id: 's3', block_number: '104', street_name: 'Yishun Ring Rd', lat: 1.4297, lng: 103.8312, interestCount: 4, categoryBreakdown: { Toys: 2, Clothing: 2 } },
+  { block_id: 's4', block_number: '103', street_name: 'Yishun Ring Rd', lat: 1.4288, lng: 103.8305, interestCount: 3, categoryBreakdown: { Electronics: 2, Household: 1 } },
+  { block_id: 's5', block_number: '105', street_name: 'Yishun Ring Rd', lat: 1.4311, lng: 103.8321, interestCount: 2, categoryBreakdown: { Furniture: 1, Books: 1 } },
+];
 
 type Stat = {
   icon: IconName;
@@ -67,7 +79,7 @@ const TODAY_STEPS: { icon: IconName; title: string; body: string }[] = [
   },
   {
     icon: 'question',
-    title: 'The volunteer returns — blind',
+    title: 'The volunteer returns, blind',
     body: "On the printed date, they come back with no idea what's waiting, or where.",
   },
 ];
@@ -77,7 +89,7 @@ const WASTE_STATS: Stat[] = [
     icon: 'shirt',
     number: '3%',
     label: 'of textile & leather waste is recycled',
-    detail: '231,000 tonnes generated in 2025 — only 6,000 tonnes recycled',
+    detail: '231,000 tonnes generated in 2025, only 6,000 tonnes recycled',
     source: 'NEA, Waste Statistics & Overall Recycling, 2025',
   },
   {
@@ -108,7 +120,7 @@ const LOOP_STATS: Stat[] = [
     icon: 'target',
     number: '30%',
     label: "Singapore's 2030 household recycling target",
-    detail: "nearly 3x today's rate — LiftUp is built for this exact goal",
+    detail: "nearly 3x today's rate. LiftUp is built for this exact goal",
     source: 'MSE / NEA, Zero Waste Masterplan',
   },
   {
@@ -125,7 +137,7 @@ const SOLUTION_PROPS: { icon: IconName; title: string; body: string }[] = [
   {
     icon: 'camera',
     title: 'Pledge with a photo or voice note',
-    body: 'AI tags the category, condition, and size automatically — no forms to fill in.',
+    body: 'AI tags the category, condition, and size automatically. No forms to fill in.',
   },
   {
     icon: 'pin',
@@ -270,8 +282,8 @@ export default function LandingPage() {
         </div>
         <div className="fade-in" style={{ textAlign: 'center', font: '700 16px var(--font-ui)', color: 'var(--text-mid)', maxWidth: 640, margin: '0 auto', lineHeight: 1.65 }}>
           They have no idea which units actually left something out, what it is, or whether it&apos;s a single
-          bag or a wardrobe that needs two people to carry. So they walk every floor and check every gate —
-          most of which have nothing waiting — for a process that could be planned in minutes instead of hours.
+          bag or a wardrobe that needs two people to carry. So they walk every floor and check every gate,
+          most of which have nothing waiting, for a process that could be planned in minutes instead of hours.
         </div>
 
         <div style={{ marginTop: 56 }}>
@@ -315,11 +327,11 @@ export default function LandingPage() {
       <Section background="var(--off-white)">
         <Eyebrow color="var(--teal)">The solution</Eyebrow>
         <div className="fade-in" style={{ textAlign: 'center', font: '800 30px var(--font-serif)', color: 'var(--text-dark)', maxWidth: 680, margin: '0 auto 16px' }}>
-          Putting that information in the volunteer&apos;s hands — before they ever leave the void deck
+          Putting that information in the volunteer&apos;s hands, before they ever leave the void deck
         </div>
         <div className="fade-in" style={{ textAlign: 'center', font: '700 14px var(--font-ui)', color: 'var(--text-mid)', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.55 }}>
           And because giving earns points, badges, and a spot on the block leaderboard, residents keep coming
-          back — turning a one-off flyer drop into a habit.
+          back, turning a one-off flyer drop into a habit.
         </div>
         <div className="landing-stats-grid landing-stats-grid--4">
           {SOLUTION_PROPS.map((prop, i) => (
@@ -332,6 +344,50 @@ export default function LandingPage() {
             </div>
           ))}
         </div>
+
+        {/* Live product preview — real components fed sample data */}
+        <div style={{ marginTop: 60 }}>
+          <div className="fade-in" style={{ textAlign: 'center', font: '800 12px var(--font-ui)', color: 'var(--teal)', letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 18 }}>
+            See it in action
+          </div>
+
+          <div className="fade-in" style={{ maxWidth: 760, margin: '0 auto' }}>
+            <DemandHeatmap blocks={SAMPLE_DEMAND_BLOCKS} />
+            <div style={{ textAlign: 'center', font: '700 13px var(--font-ui)', color: 'var(--text-muted)', marginTop: 12 }}>
+              Every pin is a block with residents waiting to give. Bigger, redder pins mean more demand, so charities know exactly where to run the next drive.
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, maxWidth: 760, margin: '28px auto 0' }}>
+            <div className="card fade-in" style={{ flex: '1 1 300px', padding: 18 }}>
+              <div style={{ font: '800 14px var(--font-serif)', color: 'var(--text-dark)' }}>We think this is...</div>
+              <div style={{ font: '700 11px var(--font-ui)', color: 'var(--rust)', marginBottom: 12 }}>Snap a photo, AI tags it. Tap a chip to correct us.</div>
+              <div className="section-label" style={{ marginBottom: 6 }}>Category</div>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 13 }}>
+                <span className="chip selected">Clothing</span>
+                <span className="chip">Books</span>
+                <span className="chip">Toys</span>
+              </div>
+              <div className="section-label" style={{ marginBottom: 6 }}>Condition</div>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                <span className="chip selected-amber">Like New</span>
+                <span className="chip">Well-Used</span>
+              </div>
+            </div>
+
+            <div className="card fade-in" style={{ flex: '1 1 300px', padding: 18 }}>
+              <div className="section-label" style={{ marginBottom: 14 }}>Floors pitching in</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <CategoryBar label="Floor 08" count={12} total={12} color="var(--amber)" />
+                <CategoryBar label="Floor 12" count={9} total={12} />
+                <CategoryBar label="Floor 03" count={6} total={12} />
+              </div>
+              <div style={{ font: '700 12px var(--font-ui)', color: 'var(--text-muted)', marginTop: 14, lineHeight: 1.5 }}>
+                Points, badges, and a friendly block leaderboard turn a one-off drop-off into a habit.
+              </div>
+            </div>
+          </div>
+        </div>
       </Section>
 
       {/* Closing CTA */}
@@ -339,7 +395,7 @@ export default function LandingPage() {
         <div className="fade-in" style={{ maxWidth: 700, margin: '0 auto', padding: '72px 24px', textAlign: 'center' }}>
           <div style={{ font: '800 30px var(--font-serif)', color: '#fff' }}>Ready to see it in action?</div>
           <div style={{ font: '700 15px var(--font-ui)', color: 'rgba(255,255,255,.8)', marginTop: 10 }}>
-            The demo takes two minutes — and one less bag of clothes in the incinerator.
+            The demo takes two minutes, and one less bag of clothes in the incinerator.
           </div>
           <Link
             href="/login"

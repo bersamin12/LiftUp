@@ -17,7 +17,7 @@ export default function DonateModal({ runId, pickupDate, pickupTime, autoOpen }:
         <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
           <div onClick={() => setIsOpen(false)} style={{ position: 'absolute', inset: 0, background: 'rgba(31,43,39,0.4)', backdropFilter: 'blur(4px)' }}></div>
           
-          <div style={{ position: 'relative', width: '100%', maxWidth: 393, background: '#fff', borderRadius: '24px 24px 0 0', padding: '24px 22px 48px', boxShadow: 'var(--shadow-modal)', animation: 'slideUp 0.3s cubic-bezier(0.1, 0.9, 0.2, 1)' }}>
+          <div className="bottom-sheet" style={{ position: 'relative', background: '#fff', borderRadius: '24px 24px 0 0', padding: '24px 22px 48px', boxShadow: 'var(--shadow-modal)', animation: 'slideUp 0.3s cubic-bezier(0.1, 0.9, 0.2, 1)' }}>
             <div style={{ width: 40, height: 4, background: 'var(--card-border)', borderRadius: 2, margin: '0 auto 20px' }}></div>
             <h2 style={{ font: '800 20px var(--font-serif)', color: 'var(--text-dark)', margin: '0 0 16px' }}>How would you like to donate?</h2>
             

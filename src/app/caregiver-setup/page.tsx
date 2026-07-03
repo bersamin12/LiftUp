@@ -144,7 +144,7 @@ export default function CaregiverSetupPage() {
             </svg>
           }
         >
-          Do this once, together. After setup, your family member only needs to snap a photo or talk — no other steps.
+          Do this once, together. After setup, your family member only needs to snap a photo or talk. No other steps.
         </Callout>
       </div>
 
@@ -207,7 +207,7 @@ export default function CaregiverSetupPage() {
 
       <div style={{ margin: '16px 22px 0' }}>
         <Callout tone="amber">
-          Setup only. The app itself is never voice-navigated — voice is used only to describe a donation.
+          Setup only. The app itself is never voice-navigated. Voice is used only to describe a donation.
         </Callout>
       </div>
     </AppScreen>

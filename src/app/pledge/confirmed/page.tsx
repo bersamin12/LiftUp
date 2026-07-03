@@ -57,7 +57,7 @@ export default async function PledgeConfirmedPage({ searchParams }: { searchPara
   const unitRef = resident?.unit_ref;
   const firstName = resident?.display_name?.split(' ')[0];
 
-  const shareText = `I gave ${sizeBucket.toLowerCase()} of ${category.toLowerCase()} to ${campaignName} through LiftUp — join me!`;
+  const shareText = `I gave ${sizeBucket.toLowerCase()} of ${category.toLowerCase()} to ${campaignName} through LiftUp. Join me!`;
 
   return (
     <AppScreen

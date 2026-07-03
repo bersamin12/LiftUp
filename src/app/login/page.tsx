@@ -204,7 +204,7 @@ export default function LoginPage() {
         </button>
         {singpassMessage && (
           <div className="fade-in" style={{ marginTop: 10, textAlign: 'center', font: '700 12px var(--font-ui)', color: 'var(--text-muted)' }}>
-            Singpass login is coming soon — not yet connected.
+            Singpass login is coming soon, not yet connected.
           </div>
         )}
 

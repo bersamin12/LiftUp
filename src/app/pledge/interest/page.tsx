@@ -80,7 +80,7 @@ function RegisterInterestContent() {
 
       <div style={{ padding: '4px 22px 0' }}>
         <Callout tone="teal">
-          No pickup is scheduled for your block yet. Let us know you&apos;re ready to give — charities use this to decide where to run their next drive.
+          No pickup is scheduled for your block yet. Let us know you&apos;re ready to give, and charities use this to decide where to run their next drive.
         </Callout>
       </div>
 

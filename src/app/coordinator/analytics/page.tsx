@@ -229,13 +229,13 @@ export default async function AnalyticsPage() {
           {trendPoints.length >= 2 ? (
             <>
               <div style={{ font: '700 13px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 12 }}>
-                Cumulative pledges received — {trendPoints[trendPoints.length - 1].value} to date
+                Cumulative pledges received, {trendPoints[trendPoints.length - 1].value} to date
               </div>
               <TrendChart points={trendPoints} accent="var(--teal)" />
             </>
           ) : (
             <div style={{ font: '700 13px var(--font-ui)', color: 'var(--text-muted)', textAlign: 'center' }}>
-              Not enough history yet — the trend appears once pledges span more than one day.
+              Not enough history yet. The trend appears once pledges span more than one day.
             </div>
           )}
         </div>

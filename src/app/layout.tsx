@@ -15,7 +15,7 @@ const bitter = Bitter({
 });
 
 export const metadata: Metadata = {
-  title: "LiftUp — Community Donation Drives",
+  title: "LiftUp: Community Donation Drives",
   description: "LiftUp connects residents with unwanted items to local charity pickup drives across Singapore.",
 };
 

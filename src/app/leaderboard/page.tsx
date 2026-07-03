@@ -66,16 +66,16 @@ export default async function LeaderboardPage() {
 
           <div style={{ margin: '24px 22px 0', background: 'var(--teal-light-bg)', border: '1px solid var(--teal-pale)', borderRadius: 14, padding: '13px 15px', textAlign: 'center' }}>
             <div style={{ font: '700 14px var(--font-ui)', color: 'var(--teal-dark)', lineHeight: 1.45 }}>
-              Every floor counts — together Blk {topFloor.block_number} has given <b style={{ color: 'var(--teal)' }}>{totalItems} items</b> in total.
+              Every floor counts. Together Blk {topFloor.block_number} has given <b style={{ color: 'var(--teal)' }}>{totalItems} items</b> in total.
             </div>
           </div>
           <div style={{ padding: '16px 22px', textAlign: 'center', font: '700 12px var(--font-ui)', color: 'var(--text-muted)', lineHeight: 1.4 }}>
-            We celebrate floors, not individuals — no one is ranked or named.
+            We celebrate floors, not individuals. No one is ranked or named.
           </div>
         </>
       ) : (
         <div style={{ padding: 22, marginTop: 40 }}>
-          <EmptyState icon="🌿" title="No donations yet" description="Be the first on your floor to give — this board will fill in as your block joins you." />
+          <EmptyState icon="🌿" title="No donations yet" description="Be the first on your floor to give, and this board will fill in as your block joins you." />
         </div>
       )}
     </AppScreen>

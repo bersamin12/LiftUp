@@ -150,7 +150,7 @@ function NewRunContent() {
             </button>
           </div>
           <div style={{ font: '700 14px var(--font-ui)', color: 'var(--text-mid)', marginBottom: 12 }}>
-            Blocks are sorted by donor interest — search and add below, or tap on the map.
+            Blocks are sorted by donor interest. Search and add below, or tap on the map.
           </div>
 
           {showMap && (
