@@ -3,6 +3,8 @@ import { supabaseService } from '@/lib/supabase-server';
 import AppScreen from '@/components/layout/AppScreen';
 import ScreenHeader from '@/components/layout/ScreenHeader';
 import CategoryBar from '@/components/CategoryBar';
+import StatTile from '@/components/layout/StatTile';
+import { POINTS_PER_PLEDGE } from '@/lib/constants';
 
 export default async function RunSummaryPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -26,7 +28,7 @@ export default async function RunSummaryPage({ params }: { params: Promise<{ id:
     return acc;
   }, {});
 
-  const pointsAwarded = confirmed.length * 50; // standard 50 points per pledge
+  const pointsAwarded = confirmed.length * POINTS_PER_PLEDGE;
   const completionRate = pledges.length > 0 ? Math.round((confirmed.length / pledges.length) * 100) : 0;
 
   const dateStr = new Date(run.run_date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -42,27 +44,15 @@ export default async function RunSummaryPage({ params }: { params: Promise<{ id:
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 32 }}>
-          <div style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 16, textAlign: 'center' }}>
-            <div style={{ font: '800 32px var(--font-serif)', color: 'var(--teal)' }}>{confirmed.length}</div>
-            <div style={{ font: '700 11px var(--font-ui)', color: 'var(--text-muted)' }}>ITEMS COLLECTED</div>
-          </div>
-          <div style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 16, textAlign: 'center' }}>
-            <div style={{ font: '800 32px var(--font-serif)', color: 'var(--rust)' }}>{pointsAwarded}</div>
-            <div style={{ font: '700 11px var(--font-ui)', color: 'var(--text-muted)' }}>POINTS AWARDED</div>
-          </div>
-          <div style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 16, textAlign: 'center' }}>
-            <div style={{ font: '800 32px var(--font-serif)', color: 'var(--amber)' }}>{postponed.length}</div>
-            <div style={{ font: '700 11px var(--font-ui)', color: 'var(--text-muted)' }}>POSTPONED</div>
-          </div>
-          <div style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 16, textAlign: 'center' }}>
-            <div style={{ font: '800 32px var(--font-serif)', color: 'var(--text-mid)' }}>{declined.length}</div>
-            <div style={{ font: '700 11px var(--font-ui)', color: 'var(--text-muted)' }}>DECLINED</div>
-          </div>
+          <StatTile value={confirmed.length} label="Items collected" accent="var(--teal)" size={32} />
+          <StatTile value={pointsAwarded} label="Points awarded" accent="var(--rust)" size={32} />
+          <StatTile value={postponed.length} label="Postponed" accent="var(--amber)" size={32} />
+          <StatTile value={declined.length} label="Declined" accent="var(--text-mid)" size={32} />
         </div>
 
-        <h2 style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.5px', margin: '32px 0 16px' }}>COLLECTION BREAKDOWN</h2>
+        <h2 className="section-label" style={{ margin: '32px 0 16px' }}>Collection breakdown</h2>
 
-        <div style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 20 }}>
+        <div className="card" style={{ padding: 20 }}>
           {Object.entries(categories).length === 0 ? (
             <div style={{ font: '700 13px var(--font-ui)', color: 'var(--text-muted)', textAlign: 'center' }}>No items collected.</div>
           ) : (

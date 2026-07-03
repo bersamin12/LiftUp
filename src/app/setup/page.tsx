@@ -39,7 +39,7 @@ export default async function SetupPage() {
       </p>
 
       {blocksErr && (
-        <div style={{ background: '#fee', border: '1px solid #f99', borderRadius: 12, padding: 14, marginBottom: 16, font: '700 13px var(--font-ui)', color: '#900' }}>
+        <div style={{ background: 'var(--warn-bg)', border: '1px solid var(--warn-border)', borderRadius: 'var(--r-input)', padding: 14, marginBottom: 16, font: '700 13px var(--font-ui)', color: 'var(--rust)' }}>
           Couldn&apos;t load blocks: {blocksErr.message}
         </div>
       )}

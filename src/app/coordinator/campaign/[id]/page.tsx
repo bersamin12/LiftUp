@@ -44,7 +44,7 @@ export default async function CampaignOverviewPage({ params }: { params: Promise
         </Link>
       }
     >
-      <div style={{ padding: '14px 22px 16px', background: 'var(--teal)', color: '#fff', borderRadius: '0 0 20px 20px' }}>
+      <div style={{ padding: '14px 22px 16px', background: 'var(--teal)', color: '#fff', borderRadius: '0 0 var(--r-hero) var(--r-hero)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <Link href="/coordinator" style={{ textDecoration: 'none', font: '800 22px var(--font-ui)', color: 'var(--teal-pale)', lineHeight: 1 }}>‹</Link>
           <div>
@@ -63,7 +63,7 @@ export default async function CampaignOverviewPage({ params }: { params: Promise
       </div>
 
       <div style={{ padding: '24px 22px' }}>
-        <h2 style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.5px', margin: '0 0 16px' }}>RUNS IN THIS CAMPAIGN</h2>
+        <h2 className="section-label" style={{ margin: '0 0 16px' }}>Runs in this campaign</h2>
 
         {runs?.length === 0 ? (
           <EmptyState title="No collection runs scheduled yet" description="Add a run to start collecting from a block." />
@@ -79,7 +79,7 @@ export default async function CampaignOverviewPage({ params }: { params: Promise
               const bulkyCount = runPledges.filter((p: any) => p.needs_two_crew).length;
 
               return (
-                <div key={run.id} style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 16, boxShadow: 'var(--shadow-card)' }}>
+                <div key={run.id} className="card" style={{ padding: 16 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div style={{ font: '700 18px var(--font-serif)', color: 'var(--text-dark)' }}>
                       {dateStr}

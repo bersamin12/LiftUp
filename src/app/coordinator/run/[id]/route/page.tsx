@@ -127,12 +127,13 @@ export default function RoutePlannerPage({ params }: { params: Promise<{ id: str
       <div style={{ flex: 1, background: '#fff', borderTopLeftRadius: 24, borderTopRightRadius: 24, marginTop: -24, zIndex: 20, position: 'relative', padding: '24px 22px', boxShadow: '0 -10px 30px rgba(0,0,0,0.05)', overflowY: 'auto' }}>
         
         <div style={{ marginBottom: 24 }}>
-          <label style={{ display: 'block', font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>STARTING LOCATION</label>
-          <select 
+          <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Starting location</label>
+          <select
             value={startLocation}
             onChange={(e) => setStartLocation(e.target.value)}
             disabled={isOptimizing}
-            style={{ width: '100%', padding: '12px 14px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 15px var(--font-ui)', background: 'var(--cream-bg)', color: 'var(--text-dark)', outline: 'none' }}
+            className="input"
+            style={{ background: 'var(--cream-bg)', fontSize: 15 }}
           >
             <option value="warehouse">Main Warehouse (Yishun Industrial)</option>
             <option value="cc">Nee Soon East CC</option>
@@ -141,8 +142,8 @@ export default function RoutePlannerPage({ params }: { params: Promise<{ id: str
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-          <h2 style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.5px', margin: 0 }}>
-            {isOptimizing ? 'CALCULATING BEST ROUTE...' : 'DRIVING SEQUENCE'}
+          <h2 className="section-label" style={{ margin: 0 }}>
+            {isOptimizing ? 'Calculating best route…' : 'Driving sequence'}
           </h2>
           <span style={{ font: '800 12px var(--font-ui)', color: 'var(--teal)' }}>
             {stops.length} Blocks · {stops.reduce((sum, s) => sum + s.pledges, 0)} Pledges

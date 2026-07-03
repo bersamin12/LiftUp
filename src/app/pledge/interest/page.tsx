@@ -6,6 +6,7 @@ import Link from 'next/link';
 import AppScreen from '@/components/layout/AppScreen';
 import ScreenHeader from '@/components/layout/ScreenHeader';
 import Callout from '@/components/layout/Callout';
+import SuccessCheck from '@/components/SuccessCheck';
 
 const CATEGORIES = ['Clothing', 'Books', 'Toys', 'Electronics', 'Furniture', 'Household', 'Other'];
 
@@ -53,9 +54,7 @@ function RegisterInterestContent() {
       <AppScreen nav="resident">
         <ScreenHeader title="Register your interest" backHref="/home" />
         <div style={{ padding: '40px 22px 0', textAlign: 'center' }}>
-          <div className="pop-rotate" style={{ width: 76, height: 76, borderRadius: '50%', background: 'var(--teal)', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ width: 18, height: 34, border: 'solid #fff', borderWidth: '0 6px 6px 0', transform: 'rotate(45deg)', marginTop: -6 }}></span>
-          </div>
+          <SuccessCheck size={76} />
           <div style={{ font: '700 22px var(--font-serif)', color: 'var(--text-dark)', marginTop: 18 }}>You&apos;re on the list</div>
           <div style={{ font: '700 14px var(--font-ui)', color: 'var(--text-muted)', marginTop: 6 }}>
             We&apos;ll let charities know your block is ready to give. You&apos;ll be notified as soon as a pickup is scheduled.
@@ -72,7 +71,7 @@ function RegisterInterestContent() {
     <AppScreen
       nav="resident"
       footer={
-        <button onClick={handleSubmit} disabled={submitting || !canSubmit} className="btn-primary" style={{ width: '100%', opacity: submitting || !canSubmit ? 0.5 : 1 }}>
+        <button onClick={handleSubmit} disabled={submitting || !canSubmit} className="btn-primary">
           {submitting ? 'Submitting...' : 'Register interest'}
         </button>
       }
@@ -86,16 +85,16 @@ function RegisterInterestContent() {
       </div>
 
       <div style={{ padding: '18px 22px 0' }}>
-        <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>OR DESCRIBE IT WITH PHOTO / VOICE</div>
+        <div className="section-label" style={{ marginBottom: 8 }}>Or describe it with photo / voice</div>
         <div style={{ display: 'flex', gap: 10 }}>
           <Link href="/pledge/photo" style={{ flex: 1, textDecoration: 'none' }}>
-            <div style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 14, padding: 14, textAlign: 'center', boxShadow: 'var(--shadow-card)' }}>
+            <div className="card card--interactive" style={{ padding: 14, textAlign: 'center' }}>
               <div style={{ font: '24px var(--font-ui)' }}>📷</div>
               <div style={{ font: '800 13px var(--font-ui)', color: 'var(--text-dark)', marginTop: 4 }}>Snap a photo</div>
             </div>
           </Link>
           <Link href="/pledge/voice" style={{ flex: 1, textDecoration: 'none' }}>
-            <div style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 14, padding: 14, textAlign: 'center', boxShadow: 'var(--shadow-card)' }}>
+            <div className="card card--interactive" style={{ padding: 14, textAlign: 'center' }}>
               <div style={{ font: '24px var(--font-ui)' }}>🎤</div>
               <div style={{ font: '800 13px var(--font-ui)', color: 'var(--text-dark)', marginTop: 4 }}>Voice record</div>
             </div>
@@ -106,11 +105,11 @@ function RegisterInterestContent() {
       <div style={{ padding: '20px 22px 0' }}>
         {error && <div style={{ color: 'var(--rust)', font: '700 12px var(--font-ui)', marginBottom: 12 }}>{error}</div>}
 
-        <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>OR JUST TELL US QUICKLY</div>
+        <div className="section-label" style={{ marginBottom: 8 }}>Or just tell us quickly</div>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 20 }}>
           {CATEGORIES.map(cat => (
             <span key={cat} onClick={() => setCategory(category === cat ? '' : cat)} className={`chip ${category === cat ? 'selected' : ''}`}>
-              {cat} {category === cat && '✓'}
+              {cat}
             </span>
           ))}
         </div>
@@ -120,7 +119,8 @@ function RegisterInterestContent() {
           onChange={e => setNote(e.target.value)}
           placeholder="e.g. 2 bags of clothes, a working microwave"
           rows={3}
-          style={{ width: '100%', boxSizing: 'border-box', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 14px var(--font-ui)', background: '#fff', outline: 'none', resize: 'none' }}
+          className="input"
+          style={{ resize: 'none' }}
         />
         {!canSubmit && (
           <div style={{ font: '700 11px var(--font-ui)', color: 'var(--text-muted)', marginTop: 8 }}>

@@ -83,7 +83,6 @@ export default function QueuePage({ params }: { params: Promise<{ id: string }> 
         }
       }}
       className="btn-primary"
-      style={{ width: '100%', padding: 16, borderRadius: 14, fontSize: 16 }}
     >
       Finish Run & Campaign
     </button>
@@ -125,7 +124,7 @@ export default function QueuePage({ params }: { params: Promise<{ id: string }> 
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                       {items.map((pledge: any) => (
-                        <div key={pledge.id} style={{ background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 16, boxShadow: 'var(--shadow-card)' }}>
+                        <div key={pledge.id} className="card" style={{ padding: 16 }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div style={{ font: '800 16px var(--font-ui)', color: 'var(--text-dark)' }}>
                               {pledge.residents?.unit_ref || 'Unknown Unit'}
@@ -146,8 +145,8 @@ export default function QueuePage({ params }: { params: Promise<{ id: string }> 
                     {activeTab === 'pending' && decliningId !== pledge.id && (
                       <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
                         <button onClick={() => handleAction(pledge.id, 'pickup')} className="btn-primary" style={{ flex: 1.3, padding: '14px 0', fontSize: 14 }}>Picked up</button>
-                        <button onClick={() => setDecliningId(pledge.id)} style={{ flex: 1, border: '1.5px solid var(--card-border)', background: '#fff', color: 'var(--rust)', font: '800 13px var(--font-ui)', padding: '14px 0', borderRadius: 12, cursor: 'pointer' }}>Decline</button>
-                        <button onClick={() => handleAction(pledge.id, 'postpone')} style={{ flex: 1, border: '1.5px solid var(--warn-border)', background: '#fff', color: 'var(--amber)', font: '800 13px var(--font-ui)', padding: '14px 0', borderRadius: 12, cursor: 'pointer' }}>Postpone</button>
+                        <button onClick={() => setDecliningId(pledge.id)} style={{ flex: 1, border: '1.5px solid var(--card-border)', background: '#fff', color: 'var(--rust)', font: '800 13px var(--font-ui)', padding: '14px 0', borderRadius: 'var(--r-btn)', cursor: 'pointer' }}>Decline</button>
+                        <button onClick={() => handleAction(pledge.id, 'postpone')} style={{ flex: 1, border: '1.5px solid var(--warn-border)', background: '#fff', color: 'var(--amber)', font: '800 13px var(--font-ui)', padding: '14px 0', borderRadius: 'var(--r-btn)', cursor: 'pointer' }}>Postpone</button>
                       </div>
                     )}
 
@@ -156,20 +155,13 @@ export default function QueuePage({ params }: { params: Promise<{ id: string }> 
                         <div style={{ font: '800 10px var(--font-ui)', color: 'var(--rust)', marginBottom: 7 }}>DECLINE — PICK A REASON</div>
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
                           {declineReasons.map(reason => (
-                            <span 
+                            <span
                               key={reason}
                               onClick={() => setSelectedReason(reason)}
-                              style={{
-                                background: selectedReason === reason ? 'var(--rust)' : '#fff',
-                                color: selectedReason === reason ? '#fff' : 'var(--rust)',
-                                border: `1.5px solid ${selectedReason === reason ? 'var(--rust)' : 'var(--rust-pale)'}`,
-                                font: '700 11px var(--font-ui)',
-                                padding: '7px 11px',
-                                borderRadius: 999,
-                                cursor: 'pointer'
-                              }}
+                              className={`chip ${selectedReason === reason ? 'selected-rust' : ''}`}
+                              style={selectedReason === reason ? undefined : { color: 'var(--rust)', borderColor: 'var(--rust)' }}
                             >
-                              {reason} {selectedReason === reason && '✓'}
+                              {reason}
                             </span>
                           ))}
                         </div>
@@ -177,11 +169,12 @@ export default function QueuePage({ params }: { params: Promise<{ id: string }> 
                           Resident is told why · no points awarded for declined items.
                         </div>
                         <div style={{ display: 'flex', gap: 8 }}>
-                          <button onClick={() => setDecliningId(null)} style={{ flex: 1, border: 'none', background: 'var(--cream-bg)', color: 'var(--text-muted)', font: '800 13px var(--font-ui)', padding: '14px 0', borderRadius: 12, cursor: 'pointer' }}>Cancel</button>
-                          <button 
+                          <button onClick={() => setDecliningId(null)} style={{ flex: 1, border: 'none', background: 'var(--cream-bg)', color: 'var(--text-muted)', font: '800 13px var(--font-ui)', padding: '14px 0', borderRadius: 'var(--r-btn)', cursor: 'pointer' }}>Cancel</button>
+                          <button
                             onClick={() => handleAction(pledge.id, 'decline', selectedReason)}
                             disabled={!selectedReason}
-                            style={{ flex: 1, border: 'none', background: 'var(--rust)', color: '#fff', font: '800 13px var(--font-ui)', padding: '14px 0', borderRadius: 12, cursor: 'pointer', opacity: selectedReason ? 1 : 0.5 }}
+                            className="btn-rust"
+                            style={{ flex: 1, padding: '14px 0', fontSize: 13 }}
                           >
                             Confirm Decline
                           </button>

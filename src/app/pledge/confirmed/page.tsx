@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { supabaseService } from '@/lib/supabase-server';
 import AppScreen from '@/components/layout/AppScreen';
 import ShareButton from '@/components/ShareButton';
+import SuccessCheck from '@/components/SuccessCheck';
 
 export default async function PledgeConfirmedPage({ searchParams }: { searchParams: Promise<{ runId?: string; pledgeId?: string }> }) {
   const { runId, pledgeId } = await searchParams;
@@ -70,24 +71,22 @@ export default async function PledgeConfirmedPage({ searchParams }: { searchPara
         </div>
       }
     >
-      <div style={{ padding: '44px 24px 0', textAlign: 'center' }}>
-        <div className="pop-rotate" style={{ width: 88, height: 88, borderRadius: '50%', background: 'var(--teal)', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ width: 22, height: 42, border: 'solid #fff', borderWidth: '0 7px 7px 0', transform: 'rotate(45deg)', marginTop: -8 }}></span>
-        </div>
+      <div style={{ padding: '44px var(--screen-pad-x) 0', textAlign: 'center' }}>
+        <SuccessCheck size={88} />
         <div style={{ font: '700 26px var(--font-serif)', color: 'var(--text-dark)', marginTop: 20 }}>
           {firstName ? `You're all set, ${firstName}` : `You're all set`}
         </div>
         <div style={{ font: '700 14px var(--font-ui)', color: 'var(--text-muted)', marginTop: 6 }}>Thank you for lifting up the block</div>
       </div>
 
-      <div style={{ margin: '26px 22px 0', background: '#fff', border: '1px solid var(--card-border)', borderRadius: 18, padding: 20, boxShadow: '0 12px 26px -18px rgba(20,40,35,.35)' }}>
+      <div className="card" style={{ margin: '26px 22px 0', padding: 20 }}>
         <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: 0.5 }}>YOUR PICKUP · {campaignName.toUpperCase()}</div>
         <div style={{ font: '700 22px var(--font-serif)', color: 'var(--teal)', margin: '6px 0 3px' }}>{pickupSlot}</div>
         <div style={{ font: '700 14px var(--font-ui)', color: 'var(--text-mid)' }}>
           A volunteer will knock at {unitRef ? <b style={{ color: 'var(--text-dark)' }}>{unitRef}</b> : 'your door'}
         </div>
 
-        <div style={{ height: 1, background: '#f0eee8', margin: '15px 0' }}></div>
+        <div style={{ height: 1, background: 'var(--card-border)', margin: '15px 0' }}></div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span style={{ width: 42, height: 42, borderRadius: 12, background: 'var(--teal-light-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', font: '800 12px var(--font-ui)', color: 'var(--teal)', textAlign: 'center' }}>

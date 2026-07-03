@@ -24,7 +24,7 @@ export default function ScreenHeader({
 }: ScreenHeaderProps) {
   const router = useRouter();
   const isHero = variant === 'hero';
-  const chevronColor = isHero ? '#bfe0da' : 'var(--teal)';
+  const chevronColor = isHero ? 'var(--teal-pale)' : 'var(--teal)';
 
   const backButton = showBack && (
     backHref ? (
@@ -50,7 +50,7 @@ export default function ScreenHeader({
         <div>
           <div style={{ font: isHero ? '800 22px var(--font-ui)' : '700 19px var(--font-serif)', color: isHero ? '#fff' : 'var(--text-dark)' }}>{title}</div>
           {subtitle && (
-            <div style={{ font: '700 14px var(--font-ui)', color: isHero ? '#cfe6e1' : 'var(--text-muted)', marginTop: 4 }}>{subtitle}</div>
+            <div style={{ font: '700 14px var(--font-ui)', color: isHero ? 'var(--teal-pale)' : 'var(--text-muted)', marginTop: 4 }}>{subtitle}</div>
           )}
         </div>
       </div>

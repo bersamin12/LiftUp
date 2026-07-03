@@ -62,6 +62,7 @@
 
   /* Radii */
   --r-card:    16px;
+  --r-hero:    20px;
   --r-input:   13px;
   --r-btn:     14px;
   --r-chip:    999px;
@@ -70,10 +71,32 @@
   /* Layout */
   --screen-pad-x: 22px;
 
-  /* Shadows */
+  /* Shadows / elevation scale */
+  --shadow-sm:    0 4px 12px -8px rgba(20,40,35,.25);
   --shadow-card:  0 10px 24px -16px rgba(20,40,35,.3);
+  --shadow-modal: 0 30px 60px -30px rgba(20,40,35,.45);
   --shadow-btn-teal:   0 8px 18px -8px rgba(20,116,111,.7);
   --shadow-btn-amber:  0 8px 18px -8px rgba(217,138,61,.7);
+  --shadow-btn-rust:   0 8px 18px -8px rgba(198,90,52,.7);
+
+  /* Focus */
+  --focus-ring: 0 0 0 3px rgba(20,116,111,.35);
+}
+
+/* ─── Global keyboard focus visibility ─────────────────────────── */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+/* Elements that carry their own shadow layer their focus ring on top */
+.btn-primary:focus-visible,
+.btn-amber:focus-visible,
+.btn-ghost:focus-visible,
+.btn-rust:focus-visible,
+.chip:focus-visible,
+.input:focus-visible,
+.card--interactive:focus-visible {
+  outline: none;
 }
 
 html, body {
@@ -93,10 +116,6 @@ html, body {
 @keyframes scan {
   0%   { transform: translateY(-6px); opacity: .9; }
   100% { transform: translateY(150px); opacity: 0; }
-}
-@keyframes shim {
-  0%   { background-position: -260px 0; }
-  100% { background-position:  260px 0; }
 }
 @keyframes bob {
   0%, 100% { transform: translateY(0); }
@@ -152,6 +171,62 @@ html, body {
   border-radius: var(--r-card);
 }
 
+/* ─── Card surface (canonical white card) ──────────────────────── */
+.card {
+  background: var(--card-white);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-card);
+}
+.card--hero {
+  border-radius: var(--r-hero);
+}
+.card--interactive {
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.card--interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px -18px rgba(20,40,35,.4);
+  border-color: var(--teal-border);
+}
+.card--interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── Section label (uppercase eyebrow above a group) ──────────── */
+.section-label {
+  font: 800 12px var(--font-ui);
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Form input / textarea / select ───────────────────────────── */
+.input {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: var(--r-input);
+  border: 1px solid var(--input-border);
+  background: var(--canvas-bg);
+  color: var(--text-dark);
+  font: 700 16px var(--font-ui);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+.input::placeholder { color: var(--text-muted); }
+.input:hover { border-color: var(--chip-border); }
+.input:focus-visible {
+  border-color: var(--teal);
+  background: var(--card-white);
+  box-shadow: var(--focus-ring);
+}
+.input:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
 .landing-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -160,6 +235,22 @@ html, body {
 
 @media (max-width: 720px) {
   .landing-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.landing-stats-grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 900px) {
+  .landing-stats-grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-stats-grid--4 {
     grid-template-columns: 1fr;
   }
 }
@@ -188,7 +279,7 @@ html, body {
   background: #fff;
   color: var(--text-dark);
   font-weight: 800;
-  box-shadow: 0 4px 10px -6px rgba(20,40,35,.4);
+  box-shadow: var(--shadow-sm);
 }
 
 /* ─── Phone-frame screen wrapper ───────────────────────────────── */
@@ -209,7 +300,7 @@ html, body {
     min-height: calc(100dvh - 48px);
     margin: 24px auto;
     border-radius: 28px;
-    box-shadow: 0 30px 60px -30px rgba(20, 40, 35, .35);
+    box-shadow: var(--shadow-modal);
   }
 }
 @media (max-width: 359px) {
@@ -244,6 +335,23 @@ html, body {
   box-shadow: var(--shadow-btn-amber);
   transition: opacity .15s;
 }
+.btn-amber:hover  { opacity: .9; }
+.btn-amber:active { opacity: .8; }
+
+.btn-rust {
+  border: none;
+  width: 100%;
+  background: var(--rust);
+  color: #fff;
+  font: 800 16px/1 var(--font-ui);
+  padding: 16px;
+  border-radius: var(--r-btn);
+  cursor: pointer;
+  box-shadow: var(--shadow-btn-rust);
+  transition: opacity .15s;
+}
+.btn-rust:hover  { opacity: .9; }
+.btn-rust:active { opacity: .8; }
 
 .btn-ghost {
   border: 1.5px solid var(--teal);
@@ -257,6 +365,20 @@ html, body {
   transition: background .15s;
 }
 .btn-ghost:hover { background: var(--teal-light-bg); }
+
+/* Shared disabled state for all button variants */
+.btn-primary:disabled,
+.btn-amber:disabled,
+.btn-rust:disabled,
+.btn-ghost:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.btn-primary:disabled:hover,
+.btn-amber:disabled:hover,
+.btn-rust:disabled:hover,
+.btn-ghost:disabled:hover { opacity: .45; }
 
 /* ─── Bottom nav bar ────────────────────────────────────────────── */
 .bottom-nav {
@@ -318,6 +440,12 @@ html, body {
   background: var(--amber);
   color: #fff;
   border-color: var(--amber);
+  font-weight: 800;
+}
+.chip.selected-rust {
+  background: var(--rust);
+  color: #fff;
+  border-color: var(--rust);
   font-weight: 800;
 }
 

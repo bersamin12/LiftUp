@@ -46,7 +46,7 @@ export default function CaregiverSetupPage() {
 
   const handleVerifyOtp = async () => {
     const token = otp.join('');
-    if (token.length !== 4 && token.length !== 6) return;
+    if (token.length !== otp.length) return;
 
     setError('');
     setLoading(true);
@@ -151,51 +151,55 @@ export default function CaregiverSetupPage() {
       <div style={{ padding: '16px 22px 0' }}>
         {error && <div style={{ color: 'var(--rust)', font: '700 12px var(--font-ui)', marginBottom: 12, textAlign: 'center' }}>{error}</div>}
         
-        <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>THEIR NAME</div>
-        <input 
+        <div className="section-label" style={{ marginBottom: 6 }}>Their name</div>
+        <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Mdm Aisha Rahman"
           disabled={step === 'otp'}
-          style={{ width: '100%', background: '#fff', border: `1.5px solid ${step === 'otp' ? 'var(--input-border)' : 'var(--teal)'}`, borderRadius: 13, padding: 13, font: '800 15px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+          className="input"
+          style={{ background: '#fff', border: `1.5px solid ${step === 'otp' ? 'var(--input-border)' : 'var(--teal)'}`, fontWeight: 800, fontSize: 15 }}
         />
 
-        <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', margin: '16px 0 6px' }}>THEIR MOBILE NUMBER</div>
+        <div className="section-label" style={{ margin: '16px 0 6px' }}>Their mobile number</div>
         <div style={{ display: 'flex', gap: 9 }}>
-          <div style={{ background: '#fff', border: '1px solid var(--input-border)', borderRadius: 13, padding: '13px 12px', font: '800 15px var(--font-ui)', color: 'var(--text-dark)' }}>+65</div>
-          <input 
+          <div style={{ display: 'flex', alignItems: 'center', background: 'var(--canvas-bg)', border: '1px solid var(--input-border)', borderRadius: 'var(--r-input)', padding: '0 14px', font: '800 15px var(--font-ui)', color: 'var(--text-mid)' }}>+65</div>
+          <input
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
             placeholder="8234 5566"
             disabled={step === 'otp'}
-            style={{ flex: 1, background: '#fff', border: '1px solid var(--input-border)', borderRadius: 13, padding: 13, font: '800 15px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+            className="input"
+            style={{ flex: 1, background: '#fff', fontWeight: 800, fontSize: 15 }}
           />
         </div>
         <div style={{ font: '700 11px var(--font-ui)', color: 'var(--text-muted)', marginTop: 6 }}>We'll text a one-time code to confirm it's theirs.</div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 16 }}>
           <div>
-            <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>BLOCK</div>
-            <input 
+            <div className="section-label" style={{ marginBottom: 6 }}>Block</div>
+            <input
               type="text"
               value={block}
               onChange={(e) => setBlock(e.target.value)}
               placeholder="Blk 118"
               disabled={step === 'otp'}
-              style={{ width: '100%', background: '#fff', border: '1px solid var(--input-border)', borderRadius: 13, padding: 13, font: '800 15px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+              className="input"
+              style={{ background: '#fff', fontWeight: 800, fontSize: 15 }}
             />
           </div>
           <div>
-            <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>UNIT</div>
-            <input 
+            <div className="section-label" style={{ marginBottom: 6 }}>Unit</div>
+            <input
               type="text"
               value={unit}
               onChange={(e) => setUnit(e.target.value)}
               placeholder="#08-232"
               disabled={step === 'otp'}
-              style={{ width: '100%', background: '#fff', border: '1px solid var(--input-border)', borderRadius: 13, padding: 13, font: '800 15px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+              className="input"
+              style={{ background: '#fff', fontWeight: 800, fontSize: 15 }}
             />
           </div>
         </div>

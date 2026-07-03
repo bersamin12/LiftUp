@@ -5,6 +5,7 @@ import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { POINTS_PER_PLEDGE } from '@/lib/constants';
 
 async function getAuthUser() {
   const cookieStore = await cookies();
@@ -119,7 +120,7 @@ export async function processPledge(pledgeId: string, action: 'pickup' | 'declin
     
     // Award standard points
     await (db.from('residents') as any)
-      .update({ total_points: updatedPledge.residents.total_points + 50 })
+      .update({ total_points: updatedPledge.residents.total_points + POINTS_PER_PLEDGE })
       .eq('id', residentId);
     
     // Naive badge unlock check (e.g. unlock "First Give" if they have 1 confirmed pledge)

@@ -35,7 +35,7 @@ export default function AllocateInterestCard({ interest, runId, pickupDate, pick
   };
 
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--teal-border)', borderRadius: 16, padding: 16, boxShadow: 'var(--shadow-card)' }}>
+    <div className="card" style={{ padding: 16 }}>
       <div style={{ font: '800 11px var(--font-ui)', color: 'var(--teal)', letterSpacing: '.4px', marginBottom: 4 }}>YOU ALREADY REGISTERED INTEREST</div>
       <div style={{ font: '700 14px var(--font-ui)', color: 'var(--text-dark)', marginBottom: 10 }}>
         {interest.category || 'Item'}{interest.note ? ` · ${interest.note}` : ''}
@@ -45,7 +45,6 @@ export default function AllocateInterestCard({ interest, runId, pickupDate, pick
         onClick={handleAllocate}
         disabled={allocating}
         className="btn-primary"
-        style={{ width: '100%', opacity: allocating ? 0.7 : 1 }}
       >
         {allocating ? 'Adding...' : `Add to pickup · ${pickupDate}, ${pickupTime}`}
       </button>

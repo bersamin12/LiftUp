@@ -161,7 +161,7 @@ function PhotoPledgeContent() {
       ) : (
         <>
           {photoDataUrl && (
-            <div style={{ margin: '6px 22px 0', height: 132, borderRadius: 16, position: 'relative', overflow: 'hidden', backgroundImage: `url(${photoDataUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <div style={{ margin: '6px 22px 0', height: 180, borderRadius: 16, position: 'relative', overflow: 'hidden', backgroundImage: `url(${photoDataUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
               {analyzing && (
                 <>
                   <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 3, background: 'linear-gradient(90deg,transparent,#14746f,transparent)', animation: 'scan 1.6s ease-in-out infinite' }}></div>
@@ -174,34 +174,34 @@ function PhotoPledgeContent() {
             </div>
           )}
 
-          <div style={{ margin: '12px 22px 0', background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 14, boxShadow: 'var(--shadow-card)', opacity: analyzing ? 0.5 : 1, transition: 'opacity 0.3s' }}>
+          <div className="card" style={{ margin: '12px 22px 0', padding: 14, opacity: analyzing ? 0.5 : 1, transition: 'opacity 0.3s' }}>
             {error && <div style={{ color: 'var(--rust)', font: '700 12px var(--font-ui)', marginBottom: 8 }}>{error}</div>}
-            
+
             <div style={{ font: '700 14px var(--font-serif)', color: 'var(--text-dark)' }}>We think this is…</div>
             <div style={{ font: '700 11px var(--font-ui)', color: 'var(--rust)', marginBottom: 11 }}>Tap a chip to correct us</div>
-            
-            <div style={{ font: '800 10px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>CATEGORY</div>
+
+            <div className="section-label" style={{ marginBottom: 6 }}>Category</div>
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 13 }}>
               {categories.map(cat => (
-                <span 
+                <span
                   key={cat}
                   onClick={() => !analyzing && setSelectedCategory(cat)}
                   className={`chip ${selectedCategory === cat ? 'selected' : ''}`}
                 >
-                  {cat} {selectedCategory === cat && '✓'}
+                  {cat}
                 </span>
               ))}
             </div>
 
-            <div style={{ font: '800 10px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>CONDITION</div>
+            <div className="section-label" style={{ marginBottom: 6 }}>Condition</div>
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
               {conditions.map(cond => (
-                <span 
+                <span
                   key={cond}
                   onClick={() => !analyzing && setSelectedCondition(cond)}
                   className={`chip ${selectedCondition === cond ? 'selected-amber' : ''}`}
                 >
-                  {cond} {selectedCondition === cond && '✓'}
+                  {cond}
                 </span>
               ))}
             </div>
@@ -214,7 +214,7 @@ function PhotoPledgeContent() {
           </div>
 
           {!analyzing && pickupDate && pickupTime && (
-            <div style={{ margin: '12px 22px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', font: '700 12px var(--font-ui)', color: 'var(--text-mid)', background: '#fff', border: '1px solid var(--card-border)', borderRadius: 12, padding: '11px 14px' }}>
+            <div className="card" style={{ margin: '12px 22px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', font: '700 12px var(--font-ui)', color: 'var(--text-mid)', padding: '11px 14px' }}>
               <span>Pickup · {pickupDate}, {pickupTime}</span>
             </div>
           )}

@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [singpassMessage, setSingpassMessage] = useState(false);
   const router = useRouter();
   const supabase = supabaseClient();
 
@@ -186,6 +187,26 @@ export default function LoginPage() {
           </svg>
           Continue with Google
         </button>
+
+        <button
+          onClick={() => setSingpassMessage(true)}
+          style={{ width: '100%', marginTop: 10, padding: '14px', borderRadius: 13, border: '1.5px solid var(--card-border)', background: '#fff', font: '800 14px var(--font-ui)', color: 'var(--text-dark)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, position: 'relative' }}
+        >
+          <span style={{ width: 20, height: 20, borderRadius: 5, background: '#DC0032', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: '0 0 auto' }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2 4 5.5v5c0 5 3.4 8.7 8 9.5 4.6-.8 8-4.5 8-9.5v-5L12 2z" />
+            </svg>
+          </span>
+          Log in with Singpass
+          <span style={{ font: '800 9px var(--font-ui)', color: 'var(--text-muted)', background: 'var(--cream-bg)', padding: '3px 8px', borderRadius: 999, letterSpacing: '.3px' }}>
+            COMING SOON
+          </span>
+        </button>
+        {singpassMessage && (
+          <div className="fade-in" style={{ marginTop: 10, textAlign: 'center', font: '700 12px var(--font-ui)', color: 'var(--text-muted)' }}>
+            Singpass login is coming soon — not yet connected.
+          </div>
+        )}
 
         {role === 'resident' && (
           <div style={{ marginTop: 24, textAlign: 'center' }}>

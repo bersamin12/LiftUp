@@ -107,7 +107,7 @@ export default async function CoordinatorDashboard() {
         </form>
       </div>
 
-      <div style={{ margin: '16px 22px 0', background: '#fff', border: '1px solid var(--card-border)', borderRadius: 14, padding: '13px 16px', display: 'flex', justifyContent: 'space-around' }}>
+      <div className="card" style={{ margin: '16px 22px 0', padding: '13px 16px', display: 'flex', justifyContent: 'space-around' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ font: '700 20px var(--font-serif)', color: 'var(--teal)' }}>{openPledges}</div>
           <div style={{ font: '700 10px var(--font-ui)', color: 'var(--text-muted)' }}>open pledges</div>
@@ -119,13 +119,13 @@ export default async function CoordinatorDashboard() {
       </div>
 
       <div style={{ padding: '24px 22px 0' }}>
-        <h2 style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.5px', margin: '0 0 16px' }}>DEMAND HEATMAP</h2>
+        <h2 className="section-label" style={{ margin: '0 0 16px' }}>Demand heatmap</h2>
         <DemandHeatmap blocks={demandBlocks} />
       </div>
 
       <div style={{ padding: '24px 22px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-          <h2 style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.5px', margin: 0 }}>ACTIVE CAMPAIGNS</h2>
+          <h2 className="section-label" style={{ margin: 0 }}>Active campaigns</h2>
           <Link href="/coordinator/campaign/new" style={{ font: '800 13px var(--font-ui)', color: 'var(--teal)', textDecoration: 'none' }}>
             + New Campaign
           </Link>
@@ -142,7 +142,7 @@ export default async function CoordinatorDashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {campaigns.map((camp: any, i: number) => (
               <Link key={camp.id} href={`/coordinator/campaign/${camp.id}`} style={{ textDecoration: 'none' }}>
-                <div className="fade-in" style={{ animationDelay: `${i * 60}ms`, background: '#fff', border: '1px solid var(--card-border)', borderRadius: 16, padding: 16, boxShadow: 'var(--shadow-card)' }}>
+                <div className="card card--interactive fade-in" style={{ animationDelay: `${i * 60}ms`, padding: 16 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div style={{ font: '700 18px var(--font-serif)', color: 'var(--text-dark)' }}>{camp.name}</div>
                     <StatusPill tone={camp.status === 'active' ? 'teal' : 'neutral'}>{camp.status}</StatusPill>

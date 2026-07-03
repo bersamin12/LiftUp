@@ -53,12 +53,13 @@ export default function BlockSelect({ blocks, residentId }: { blocks: any[], res
             setSelectedBlock('');
           }}
           onFocus={() => setIsOpen(true)}
-          style={{ width: '100%', padding: '16px', borderRadius: 14, border: '1.5px solid var(--teal)', background: '#fff', font: '800 16px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+          className="input"
+          style={{ padding: 16, border: '1.5px solid var(--teal)', background: '#fff', fontWeight: 800 }}
         />
         {selectedBlockData && !isOpen && (
           <div 
             onClick={() => setIsOpen(true)}
-            style={{ position: 'absolute', inset: 2, background: '#fff', borderRadius: 12, padding: '14px', font: '800 16px var(--font-ui)', color: 'var(--text-dark)', display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+            style={{ position: 'absolute', inset: 2, background: '#fff', borderRadius: 'var(--r-input)', padding: 14, font: '800 16px var(--font-ui)', color: 'var(--text-dark)', display: 'flex', alignItems: 'center', cursor: 'pointer' }}
           >
             Blk {selectedBlockData.block_number} - {selectedBlockData.street_name}
           </div>
@@ -86,11 +87,10 @@ export default function BlockSelect({ blocks, residentId }: { blocks: any[], res
         )}
       </div>
 
-      <button 
-        onClick={handleSave} 
+      <button
+        onClick={handleSave}
         disabled={!selectedBlock || loading}
-        className="btn-primary" 
-        style={{ width: '100%', padding: '16px', borderRadius: 14, fontSize: 16, opacity: selectedBlock && !loading ? 1 : 0.5 }}
+        className="btn-primary"
       >
         {loading ? 'Saving...' : 'Continue'}
       </button>

@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
+import BadgeIcon from '@/components/BadgeIcon';
+import BadgeReveal from '@/components/BadgeReveal';
 
 export default function RealtimeNotifier({ residentId }: { residentId: string }) {
   const [toast, setToast] = useState<{ message: string, visible: boolean } | null>(null);
@@ -118,28 +120,15 @@ export default function RealtimeNotifier({ residentId }: { residentId: string })
       )}
 
       {unlockedBadge && (
-        <div className="fade-in" style={{ position: 'fixed', inset: 0, background: 'rgba(42,36,32,0.9)', zIndex: 10000, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-          <div style={{ background: 'var(--cream-bg)', width: '100%', maxWidth: 320, borderRadius: 24, padding: 32, textAlign: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}>
-            <div style={{ font: '800 13px var(--font-ui)', color: 'var(--teal)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 16 }}>
-              New Badge Unlocked!
-            </div>
-            <div style={{ fontSize: 64, marginBottom: 16, filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))' }}>
-              {unlockedBadge.icon || '🏅'}
-            </div>
-            <div style={{ font: '700 24px var(--font-serif)', color: 'var(--text-dark)', marginBottom: 8 }}>
-              {unlockedBadge.name}
-            </div>
-            <div style={{ font: '700 14px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 32, lineHeight: 1.4 }}>
-              {unlockedBadge.description || 'You just hit a new milestone in your community!'}
-            </div>
-            <button 
-              onClick={dismissBadge}
-              className="btn-primary" 
-              style={{ width: '100%', padding: '16px', borderRadius: 14, fontSize: 16, cursor: 'pointer' }}
-            >
-              Awesome
-            </button>
-          </div>
+        <div className="fade-in" style={{ position: 'fixed', inset: 0, zIndex: 10000 }}>
+          <BadgeReveal
+            name={unlockedBadge.name}
+            description={unlockedBadge.description || 'You just hit a new milestone in your community!'}
+            icon={<BadgeIcon iconKey={unlockedBadge.icon_key} color={unlockedBadge.accent_color || 'var(--rust)'} size={76} />}
+            shareText={`I just earned the "${unlockedBadge.name}" badge on LiftUp! ${unlockedBadge.description || ''}`}
+            onSkip={dismissBadge}
+            onPrimary={dismissBadge}
+          />
         </div>
       )}
     </>

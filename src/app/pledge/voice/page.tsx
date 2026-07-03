@@ -4,6 +4,7 @@ import { Suspense, useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppScreen from '@/components/layout/AppScreen';
 import ScreenHeader from '@/components/layout/ScreenHeader';
+import IconTile from '@/components/IconTile';
 
 const MANUAL_CATEGORIES = ['Clothing', 'Books', 'Toys', 'Electronics', 'Furniture', 'Other'];
 const MANUAL_CONDITIONS = ['Like New', 'Well-Used', 'Needs Repair', 'Not Working'];
@@ -175,14 +176,20 @@ function VoicePledgeContent() {
       : undefined;
 
   return (
-    <AppScreen background="#f4f7f2" footer={footer}>
-      <ScreenHeader variant="hero" title="Tell us about it" subtitle="Just talk, we'll do the rest" />
+    <AppScreen footer={footer}>
+      <ScreenHeader title="Tell us about it" subtitle="Just talk, we'll do the rest" />
 
       <div style={{ padding: '18px 22px 0' }}>
         {error && <div style={{ color: 'var(--rust)', font: '700 12px var(--font-ui)', marginBottom: 12, textAlign: 'center' }}>{error}</div>}
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#fff', border: '1px solid var(--input-border)', borderRadius: 16, padding: 12 }}>
-          <span style={{ width: 52, height: 52, borderRadius: 12, background: 'repeating-linear-gradient(45deg,#e9e5db,#e9e5db 7px,#e0dbcf 7px,#e0dbcf 14px)', flex: '0 0 auto' }}></span>
+
+        <div className="card" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12 }}>
+          <IconTile size={52} radius={12} background="var(--warn-bg)" color="var(--amber-dark)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="9" y="2.5" width="6" height="12" rx="3"></rect>
+              <path d="M5.5 11a6.5 6.5 0 0 0 13 0"></path>
+              <path d="M12 17.5V21"></path>
+            </svg>
+          </IconTile>
           <div style={{ lineHeight: 1.3 }}>
             <div style={{ font: '800 15px var(--font-ui)', color: 'var(--text-dark)' }}>Photo skipped</div>
             <div style={{ font: '700 13px var(--font-ui)', color: 'var(--text-muted)' }}>Using voice only</div>
@@ -221,11 +228,11 @@ function VoicePledgeContent() {
             </div>
             {recording && (
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, marginTop: 14, height: 26 }}>
-                 <span style={{ width: 4, height: 10, background: '#d3a06f', borderRadius: 2, animation: 'bob 0.5s infinite alternate' }}></span>
+                 <span style={{ width: 4, height: 10, background: 'var(--amber)', borderRadius: 2, animation: 'bob 0.5s infinite alternate' }}></span>
                  <span style={{ width: 4, height: 20, background: 'var(--rust)', borderRadius: 2, animation: 'bob 0.4s infinite alternate' }}></span>
-                 <span style={{ width: 4, height: 14, background: '#d3a06f', borderRadius: 2, animation: 'bob 0.6s infinite alternate' }}></span>
+                 <span style={{ width: 4, height: 14, background: 'var(--amber)', borderRadius: 2, animation: 'bob 0.6s infinite alternate' }}></span>
                  <span style={{ width: 4, height: 24, background: 'var(--rust)', borderRadius: 2, animation: 'bob 0.3s infinite alternate' }}></span>
-                 <span style={{ width: 4, height: 16, background: '#d3a06f', borderRadius: 2, animation: 'bob 0.5s infinite alternate' }}></span>
+                 <span style={{ width: 4, height: 16, background: 'var(--amber)', borderRadius: 2, animation: 'bob 0.5s infinite alternate' }}></span>
               </div>
             )}
 
@@ -239,20 +246,20 @@ function VoicePledgeContent() {
             )}
 
             {showManualFallback && (
-              <div style={{ marginTop: 18, background: '#fff', border: '1px solid var(--input-border)', borderRadius: 16, padding: 15, textAlign: 'left' }}>
-                <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>CATEGORY</div>
+              <div className="card" style={{ marginTop: 18, padding: 15, textAlign: 'left' }}>
+                <div className="section-label" style={{ marginBottom: 8 }}>Category</div>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 14 }}>
                   {MANUAL_CATEGORIES.map(cat => (
                     <span key={cat} onClick={() => setManualCategory(cat)} className={`chip ${manualCategory === cat ? 'selected' : ''}`}>
-                      {cat} {manualCategory === cat && '✓'}
+                      {cat}
                     </span>
                   ))}
                 </div>
-                <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>CONDITION</div>
+                <div className="section-label" style={{ marginBottom: 8 }}>Condition</div>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {MANUAL_CONDITIONS.map(cond => (
                     <span key={cond} onClick={() => setManualCondition(cond)} className={`chip ${manualCondition === cond ? 'selected-amber' : ''}`}>
-                      {cond} {manualCondition === cond && '✓'}
+                      {cond}
                     </span>
                   ))}
                 </div>
@@ -264,8 +271,8 @@ function VoicePledgeContent() {
             Transcribing audio...
           </div>
         ) : (
-          <div style={{ margin: '16px 0 0', background: '#fff', border: '1px solid var(--input-border)', borderRadius: 16, padding: '14px 15px', textAlign: 'left' }}>
-            <div style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>WHAT WE HEARD</div>
+          <div className="card" style={{ margin: '16px 0 0', padding: '14px 15px', textAlign: 'left' }}>
+            <div className="section-label" style={{ marginBottom: 6 }}>What we heard</div>
             <div style={{ font: '700 16px var(--font-ui)', color: 'var(--text-dark)', lineHeight: 1.4 }}>
               "{transcription}"
             </div>

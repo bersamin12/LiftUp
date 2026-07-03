@@ -110,41 +110,41 @@ function NewRunContent() {
       <form onSubmit={handleSubmit} style={{ padding: '24px 22px', display: 'flex', flexDirection: 'column', gap: 24 }}>
 
         <div>
-          <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>RUN DATE</label>
-          <input 
+          <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Run date</label>
+          <input
             type="date"
-            name="run_date" 
-            required 
-            style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 16px var(--font-ui)', background: 'var(--canvas-bg)', outline: 'none' }}
+            name="run_date"
+            required
+            className="input"
           />
         </div>
 
         <div style={{ display: 'flex', gap: 12 }}>
           <div style={{ flex: 1 }}>
-            <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>START TIME</label>
-            <input 
+            <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Start time</label>
+            <input
               type="time"
-              name="start_time" 
+              name="start_time"
               defaultValue="09:00"
-              required 
-              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 16px var(--font-ui)', background: 'var(--canvas-bg)', outline: 'none' }}
+              required
+              className="input"
             />
           </div>
           <div style={{ flex: 1 }}>
-            <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>END TIME</label>
-            <input 
+            <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>End time</label>
+            <input
               type="time"
-              name="end_time" 
+              name="end_time"
               defaultValue="12:00"
-              required 
-              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 16px var(--font-ui)', background: 'var(--canvas-bg)', outline: 'none' }}
+              required
+              className="input"
             />
           </div>
         </div>
 
         <div style={{ background: 'var(--cream-bg)', padding: 16, borderRadius: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-            <label style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)' }}>SELECT BLOCKS TO VISIT</label>
+            <label className="section-label">Select blocks to visit</label>
             <button type="button" onClick={() => setShowMap(!showMap)} style={{ background: 'none', border: 'none', font: '800 12px var(--font-ui)', color: 'var(--teal)', cursor: 'pointer', padding: 0 }}>
               {showMap ? 'Hide map' : 'Show map'}
             </button>
@@ -174,7 +174,8 @@ function NewRunContent() {
               placeholder="Search block e.g. 214"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              style={{ width: '100%', boxSizing: 'border-box', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 16px var(--font-ui)', background: '#fff', outline: 'none' }}
+              className="input"
+              style={{ background: '#fff' }}
             />
             {search && (
               <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid var(--card-border)', borderRadius: 12, marginTop: 4, maxHeight: 200, overflowY: 'auto', zIndex: 10 }}>
@@ -210,7 +211,7 @@ function NewRunContent() {
           </div>
         </div>
 
-        <button type="submit" className="btn-primary" disabled={isSubmitting} style={{ marginTop: 12, opacity: isSubmitting ? 0.7 : 1 }}>
+        <button type="submit" className="btn-primary" disabled={isSubmitting} style={{ marginTop: 12 }}>
           {isSubmitting ? 'Scheduling...' : 'Schedule Run'}
         </button>
       </form>

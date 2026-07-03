@@ -43,7 +43,6 @@ export default function OrgSetupPage() {
       form="org-setup-form"
       disabled={!name || !uen || loading}
       className="btn-primary"
-      style={{ opacity: (!name || !uen || loading) ? 0.5 : 1 }}
     >
       {loading ? 'Submitting...' : 'Submit for verification'}
     </button>
@@ -66,47 +65,51 @@ export default function OrgSetupPage() {
 
       <form id="org-setup-form" onSubmit={handleSave} style={{ padding: '18px 22px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div>
-          <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>ORGANISATION NAME</div>
+          <div className="section-label" style={{ marginBottom: 6 }}>Organisation name</div>
           <input
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
             placeholder="e.g. Willing Hearts"
-            style={{ width: '100%', boxSizing: 'border-box', background: '#fff', border: '1.5px solid var(--teal)', borderRadius: 13, padding: 13, font: '800 14px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+            className="input"
+            style={{ background: '#fff', border: '1.5px solid var(--teal)', fontWeight: 800, fontSize: 14 }}
             required
           />
         </div>
         <div>
-          <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>UEN / REGISTRATION NO.</div>
+          <div className="section-label" style={{ marginBottom: 6 }}>UEN / Registration no.</div>
           <input
             type="text"
             value={uen}
             onChange={e => setUen(e.target.value)}
             placeholder="e.g. S35SS0006K"
-            style={{ width: '100%', boxSizing: 'border-box', background: '#fff', border: '1px solid var(--input-border)', borderRadius: 13, padding: 13, font: '800 14px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+            className="input"
+            style={{ background: '#fff', fontWeight: 800, fontSize: 14 }}
             required
           />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 10 }}>
           <div>
-            <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>CONTACT PERSON</div>
+            <div className="section-label" style={{ marginBottom: 6 }}>Contact person</div>
             <input
               type="text"
               value={contactPerson}
               onChange={e => setContactPerson(e.target.value)}
               placeholder="e.g. Grace Lim"
-              style={{ width: '100%', boxSizing: 'border-box', background: '#fff', border: '1px solid var(--input-border)', borderRadius: 13, padding: 13, font: '800 14px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+              className="input"
+              style={{ background: '#fff', fontWeight: 800, fontSize: 14 }}
             />
           </div>
           <div>
-            <div style={{ font: '800 11px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 6 }}>ROLE</div>
+            <div className="section-label" style={{ marginBottom: 6 }}>Role</div>
             <input
               type="text"
               value={contactRole}
               onChange={e => setContactRole(e.target.value)}
               placeholder="Coordinator"
-              style={{ width: '100%', boxSizing: 'border-box', background: '#fff', border: '1px solid var(--input-border)', borderRadius: 13, padding: 13, font: '800 14px var(--font-ui)', color: 'var(--text-dark)', outline: 'none' }}
+              className="input"
+              style={{ background: '#fff', fontWeight: 800, fontSize: 14 }}
             />
           </div>
         </div>

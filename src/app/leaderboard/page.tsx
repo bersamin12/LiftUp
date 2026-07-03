@@ -34,16 +34,16 @@ export default async function LeaderboardPage() {
 
       {topFloor ? (
         <>
-          <div style={{ margin: '12px 22px 0', borderRadius: 18, overflow: 'hidden', background: 'var(--amber)', color: '#fff', padding: 18, position: 'relative' }}>
+          <div style={{ margin: '12px 22px 0', borderRadius: 'var(--r-hero)', overflow: 'hidden', background: 'var(--amber)', color: '#fff', padding: 18, position: 'relative' }}>
             <div style={{ position: 'absolute', right: -10, top: -10, width: 80, height: 80, borderRadius: '50%', background: 'rgba(255,255,255,.12)' }}></div>
-            <div style={{ font: '800 12px var(--font-ui)', color: '#fbe6cd', letterSpacing: '.5px' }}>MOST GENEROUS FLOOR</div>
+            <div style={{ font: '800 12px var(--font-ui)', color: 'var(--amber-pale)', letterSpacing: '.5px' }}>MOST GENEROUS FLOOR</div>
             <div style={{ font: '700 30px var(--font-serif)', marginTop: 4 }}>Floor {String(topFloor.floor_number).padStart(2, '0')} 🌿</div>
-            <div style={{ font: '700 13px var(--font-ui)', color: '#fbe6cd', marginTop: 4 }}>
+            <div style={{ font: '700 13px var(--font-ui)', color: 'var(--amber-pale)', marginTop: 4 }}>
               {topFloor.confirmed_pledges} items given by neighbours on this floor
             </div>
           </div>
 
-          <div style={{ padding: '24px 22px 8px', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.5px' }}>FLOORS PITCHING IN</div>
+          <div className="section-label" style={{ padding: '24px 22px 8px' }}>Floors pitching in</div>
           <div style={{ padding: '0 22px', display: 'flex', flexDirection: 'column', gap: 11 }}>
             {sortedData.map((floor: any, index: number) => {
               const maxVal = topFloor.confirmed_pledges;

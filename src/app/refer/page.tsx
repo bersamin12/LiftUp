@@ -49,9 +49,9 @@ export default async function ReferPage() {
         </div>
 
         <div style={{ background: '#fff', border: '2px dashed var(--teal-border)', borderRadius: 16, padding: '24px', marginBottom: 20 }}>
-          <div style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 12 }}>YOUR INVITE CODE</div>
+          <div className="section-label" style={{ letterSpacing: '1px', marginBottom: 12 }}>Your invite code</div>
           <div style={{ font: '800 32px var(--font-serif)', color: 'var(--teal)', letterSpacing: '2px' }}>
-            {inviteCode || 'LOADING...'}
+            {inviteCode || '– – – –'}
           </div>
         </div>
 
@@ -59,10 +59,10 @@ export default async function ReferPage() {
 
         {referrals && referrals.length > 0 && (
           <div style={{ marginTop: 32, textAlign: 'left' }}>
-            <div style={{ font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.5px', marginBottom: 9 }}>YOUR INVITES</div>
+            <div className="section-label" style={{ marginBottom: 9 }}>Your invites</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {referrals.map((ref: any, i: number) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff', border: '1px solid var(--card-border)', borderRadius: 14, padding: '12px 15px' }}>
+                <div key={i} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 15px' }}>
                   <span style={{ font: '800 13px var(--font-ui)', color: 'var(--text-dark)' }}>{ref.invitee?.display_name || 'A neighbour'}</span>
                   <StatusPill tone={ref.vested ? 'success' : 'pending'}>{ref.vested ? 'Donated · +50' : 'Joined · pending'}</StatusPill>
                 </div>

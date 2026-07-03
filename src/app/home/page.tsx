@@ -8,6 +8,7 @@ import AllocateInterestCard from './AllocateInterestCard';
 import AppScreen from '@/components/layout/AppScreen';
 import EmptyState from '@/components/layout/EmptyState';
 import StatusPill from '@/components/layout/StatusPill';
+import Avatar from '@/components/Avatar';
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ give?: string }> }) {
   const { give } = await searchParams;
@@ -85,6 +86,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ g
     return `${hr12}${m === '00' ? '' : ':' + m}${ampm}`;
   };
 
+  const sgHour = Number(new Intl.DateTimeFormat('en-GB', { hour: 'numeric', hour12: false, timeZone: 'Asia/Singapore' }).format(new Date()));
+  const greeting = sgHour < 12 ? 'Good morning' : sgHour < 18 ? 'Good afternoon' : 'Good evening';
+
   const nearestRun = displayRuns[0];
   const nearestRunDate = nearestRun ? new Date(nearestRun.run_date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '';
   const nearestRunTime = nearestRun ? `${formatTime(nearestRun.time_window_start)}–${formatTime(nearestRun.time_window_end)}` : '';
@@ -99,7 +103,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ g
             {block ? `Blk ${block.block_number} · ${block.street_name}` : 'No Block Assigned'}
           </div>
           <div style={{ font: '700 22px var(--font-serif)', color: 'var(--teal)' }}>
-            Good morning, {resident.display_name}
+            {greeting}, {resident.display_name}
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -121,13 +125,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ g
               Log out
             </button>
           </form>
-          <span style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--teal)', color: '#fff', font: '900 14px var(--font-ui)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {resident.display_name?.substring(0, 2).toUpperCase()}
-          </span>
+          <Avatar name={resident.display_name || 'Resident'} size={40} />
         </div>
       </div>
 
-      <div style={{ padding: '2px 22px 0', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.5px', textTransform: 'uppercase' }}>
+      <div className="section-label" style={{ padding: '2px 22px 0' }}>
         Campaigns near you
       </div>
 
@@ -166,7 +168,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ g
             const timeStr = `${formatTime(run.time_window_start)}–${formatTime(run.time_window_end)}`;
 
             return (
-              <div key={run.id} className="fade-in" style={{ animationDelay: `${i * 60}ms`, background: '#fff', border: '1px solid var(--card-border)', borderRadius: 18, padding: 18, boxShadow: 'var(--shadow-card)' }}>
+              <div key={run.id} className="card fade-in" style={{ animationDelay: `${i * 60}ms`, padding: 18 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
                   <span style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--teal-light-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', font: '800 13px var(--font-ui)', color: 'var(--teal)' }}>
                     {orgName.substring(0, 2).toUpperCase()}
@@ -175,9 +177,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ g
                     <div style={{ font: '700 17px var(--font-serif)', color: 'var(--text-dark)' }}>{campaignName}</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 4 }}>
                       <span style={{ font: '700 12px var(--font-ui)', color: 'var(--text-muted)' }}>{orgName}</span>
-                      <span style={{ width: 15, height: 15, borderRadius: '50%', background: 'var(--teal)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span style={{ width: 4, height: 8, border: 'solid #fff', borderWidth: '0 1.5px 1.5px 0', transform: 'rotate(45deg)', margin: '-1px 0 0 1px' }}></span>
-                      </span>
+                      <span className="verified-badge" aria-hidden="true" />
                       <span style={{ font: '800 10px var(--font-ui)', color: 'var(--teal)' }}>Verified</span>
                     </div>
                   </div>
@@ -190,10 +190,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ g
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 14 }}>
-                  <span className="chip selected">Clothing</span>
-                  <span className="chip selected">Books</span>
-                  <span className="chip selected">Toys</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 14 }}>
+                  <span style={{ font: '800 10px var(--font-ui)', color: 'var(--text-muted)', letterSpacing: '.4px', textTransform: 'uppercase' }}>Accepting</span>
+                  <span className="chip">Clothing</span>
+                  <span className="chip">Books</span>
+                  <span className="chip">Toys</span>
                 </div>
 
                 <DonateModal runId={run.id} pickupDate={dateStr} pickupTime={timeStr} autoOpen={give === run.id} />

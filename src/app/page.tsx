@@ -9,7 +9,7 @@ type Stat = {
   source: string;
 };
 
-type IconName = 'shirt' | 'house' | 'warning' | 'heart' | 'target' | 'box' | 'door' | 'pin' | 'ribbon' | 'loop';
+type IconName = 'shirt' | 'house' | 'warning' | 'heart' | 'target' | 'box' | 'door' | 'pin' | 'ribbon' | 'loop' | 'flyer' | 'question' | 'camera';
 
 function Icon({ name, size = 22 }: { name: IconName; size?: number }) {
   const common = {
@@ -44,8 +44,33 @@ function Icon({ name, size = 22 }: { name: IconName; size?: number }) {
       return <svg {...common}><circle cx="12" cy="8" r="5" /><path d="M9 12.5 7 21l5-3 5 3-2-8.5" /></svg>;
     case 'loop':
       return <svg {...common}><path d="M17 2 21 6l-4 4" /><path d="M3 12v-1a4 4 0 0 1 4-4h14" /><path d="M7 22 3 18l4-4" /><path d="M21 12v1a4 4 0 0 1-4 4H3" /></svg>;
+    case 'flyer':
+      return <svg {...common}><path d="M6 2h9l3 3v17H6z" /><path d="M15 2v3h3" /><path d="M9 12h6M9 16h6" /></svg>;
+    case 'question':
+      return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M9.5 9a2.5 2.5 0 0 1 4.9.7c0 1.8-2.4 2-2.4 3.8" /><path d="M12 17h.01" /></svg>;
+    case 'camera':
+      return <svg {...common}><path d="M4 8a2 2 0 0 1 2-2h1.5l1-1.5h7l1 1.5H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z" /><circle cx="12" cy="13" r="3.5" /></svg>;
   }
 }
+
+// ─── "How drives work today" — the origin story ─────────────────
+const TODAY_STEPS: { icon: IconName; title: string; body: string }[] = [
+  {
+    icon: 'flyer',
+    title: 'A volunteer walks the block',
+    body: 'Leaving a flyer at every door, with a date printed on it.',
+  },
+  {
+    icon: 'box',
+    title: 'Residents leave items outside',
+    body: "Anyone who wants to give something sets it outside their unit.",
+  },
+  {
+    icon: 'question',
+    title: 'The volunteer returns — blind',
+    body: "On the printed date, they come back with no idea what's waiting, or where.",
+  },
+];
 
 const WASTE_STATS: Stat[] = [
   {
@@ -95,21 +120,27 @@ const LOOP_STATS: Stat[] = [
   },
 ];
 
-const VALUE_PROPS: { icon: IconName; title: string; body: string }[] = [
+// ─── "How LiftUp solves it" — matches the 4 mechanisms in the script ─────
+const SOLUTION_PROPS: { icon: IconName; title: string; body: string }[] = [
   {
-    icon: 'door',
-    title: 'No drop-off required',
-    body: 'Residents pledge an item from home — a volunteer collects it right at the door.',
+    icon: 'camera',
+    title: 'Pledge with a photo or voice note',
+    body: 'AI tags the category, condition, and size automatically — no forms to fill in.',
   },
   {
     icon: 'pin',
-    title: 'Charities see real demand',
-    body: 'Pending interest shows up on a live map before a pickup is even scheduled.',
+    title: 'A live map for every drive',
+    body: 'Charities see exactly which blocks and units have something waiting, flagged if it needs extra hands.',
+  },
+  {
+    icon: 'target',
+    title: 'Demand before the drive is scheduled',
+    body: 'Charities know where to run their next drive instead of guessing.',
   },
   {
     icon: 'ribbon',
-    title: 'Giving is recognised',
-    body: 'Points, badges, and a block leaderboard turn donating into a shared habit.',
+    title: 'Giving becomes a habit',
+    body: 'Points, badges, and a block leaderboard keep residents coming back.',
   },
 ];
 
@@ -173,7 +204,7 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      {/* Hero */}
+      {/* 1. HOOK — opening line of the script */}
       <div style={{ position: 'relative', overflow: 'hidden', background: 'linear-gradient(160deg, var(--teal) 0%, var(--teal-dark) 100%)' }}>
         <div
           style={{
@@ -195,8 +226,8 @@ export default function LandingPage() {
             97% of what Singapore throws away in clothing never gets a second life.
           </h1>
           <p className="fade-in" style={{ animationDelay: '120ms', font: '700 17px var(--font-ui)', color: 'var(--teal-pale)', marginTop: 20, lineHeight: 1.55 }}>
-            LiftUp connects residents who have something to give with the charities and neighbours who need it —
-            turning doorstep clutter into someone else&apos;s doorstep delivery.
+            Our app, LiftUp, is a gamified community donation platform that streamlines the donation
+            process for both residents and charities.
           </p>
           <Link
             href="/login"
@@ -208,30 +239,69 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* The waste problem */}
+      {/* 2. ORIGIN STORY — "the idea came from watching how drives work today" */}
       <Section background="var(--off-white)">
-        <Eyebrow color="var(--rust)">The waste problem</Eyebrow>
+        <Eyebrow color="var(--teal)">Where the idea came from</Eyebrow>
+        <div className="fade-in" style={{ textAlign: 'center', font: '800 28px var(--font-serif)', color: 'var(--text-dark)', maxWidth: 640, margin: '0 auto 12px' }}>
+          How donation drives work today
+        </div>
+        <div className="fade-in" style={{ textAlign: 'center', font: '700 15px var(--font-ui)', color: 'var(--text-mid)', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.55 }}>
+          We watched how community donation drives actually run in HDB estates.
+        </div>
         <div className="landing-stats-grid">
-          {WASTE_STATS.map((stat, i) => (
-            <StatCard key={stat.label} stat={stat} delay={i * 70} accent="var(--rust)" tint="rgba(198,90,52,.12)" />
+          {TODAY_STEPS.map((step, i) => (
+            <div key={step.title} className="fade-in" style={{ animationDelay: `${i * 70}ms`, textAlign: 'center', padding: '0 16px' }}>
+              <div style={{ width: 52, height: 52, borderRadius: '50%', background: '#fff', border: '2px solid var(--card-border)', color: 'var(--teal)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', fontWeight: 800, position: 'relative' }}>
+                <Icon name={step.icon} size={24} />
+                <span style={{ position: 'absolute', top: -8, right: -8, width: 22, height: 22, borderRadius: '50%', background: 'var(--teal)', color: '#fff', font: '800 11px var(--font-ui)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{i + 1}</span>
+              </div>
+              <div style={{ font: '800 15px var(--font-ui)', color: 'var(--text-dark)', marginTop: 16 }}>{step.title}</div>
+              <div style={{ font: '700 13px var(--font-ui)', color: 'var(--text-mid)', marginTop: 6, lineHeight: 1.5 }}>{step.body}</div>
+            </div>
           ))}
         </div>
       </Section>
 
-      {/* Closing the loop bridge */}
-      <div className="fade-in" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20, padding: '0 24px' }}>
-        <div style={{ flex: 1, maxWidth: 220, height: 1, background: 'var(--card-border)' }} />
-        <div style={{ width: 52, height: 52, borderRadius: '50%', flex: '0 0 auto', background: 'linear-gradient(135deg, var(--rust) 0%, var(--teal) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: 'var(--shadow-card)' }}>
-          <Icon name="loop" size={24} />
+      {/* 3. THE PROBLEM — "the volunteer is working blind" */}
+      <Section background="var(--warn-bg)">
+        <Eyebrow color="var(--rust)">The problem</Eyebrow>
+        <div className="fade-in" style={{ textAlign: 'center', font: '800 30px var(--font-serif)', color: 'var(--text-dark)', maxWidth: 680, margin: '0 auto 20px' }}>
+          The volunteer is working blind
         </div>
-        <div style={{ flex: 1, maxWidth: 220, height: 1, background: 'var(--card-border)' }} />
-      </div>
-      <div className="fade-in" style={{ display: 'flex', justifyContent: 'center', gap: 60, marginTop: 12, padding: '0 24px', flexWrap: 'wrap' }}>
-        <div style={{ font: '800 12px var(--font-ui)', color: 'var(--rust)', textAlign: 'center' }}>What we throw away</div>
-        <div style={{ font: '800 12px var(--font-ui)', color: 'var(--teal)', textAlign: 'center' }}>Who could use it instead</div>
-      </div>
+        <div className="fade-in" style={{ textAlign: 'center', font: '700 16px var(--font-ui)', color: 'var(--text-mid)', maxWidth: 640, margin: '0 auto', lineHeight: 1.65 }}>
+          They have no idea which units actually left something out, what it is, or whether it&apos;s a single
+          bag or a wardrobe that needs two people to carry. So they walk every floor and check every gate —
+          most of which have nothing waiting — for a process that could be planned in minutes instead of hours.
+        </div>
 
-      {/* Circular economy / who benefits */}
+        <div style={{ marginTop: 56 }}>
+          <div className="fade-in" style={{ textAlign: 'center', font: '700 13px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 24 }}>
+            And the stakes are bigger than one estate:
+          </div>
+          <div className="landing-stats-grid">
+            {WASTE_STATS.map((stat, i) => (
+              <StatCard key={stat.label} stat={stat} delay={i * 70} accent="var(--rust)" tint="rgba(198,90,52,.12)" />
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Closing the loop bridge */}
+      <Section background="var(--off-white)" padding="56px 24px 0">
+        <div className="fade-in" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
+          <div style={{ flex: 1, maxWidth: 220, height: 1, background: 'var(--card-border)' }} />
+          <div style={{ width: 52, height: 52, borderRadius: '50%', flex: '0 0 auto', background: 'linear-gradient(135deg, var(--rust) 0%, var(--teal) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: 'var(--shadow-card)' }}>
+            <Icon name="loop" size={24} />
+          </div>
+          <div style={{ flex: 1, maxWidth: 220, height: 1, background: 'var(--card-border)' }} />
+        </div>
+        <div className="fade-in" style={{ display: 'flex', justifyContent: 'center', gap: 60, marginTop: 12, flexWrap: 'wrap' }}>
+          <div style={{ font: '800 12px var(--font-ui)', color: 'var(--rust)', textAlign: 'center' }}>What we throw away</div>
+          <div style={{ font: '800 12px var(--font-ui)', color: 'var(--teal)', textAlign: 'center' }}>Who could use it instead</div>
+        </div>
+      </Section>
+
+      {/* 4. WHO BENEFITS — circular economy stats, before the solution */}
       <Section background="var(--teal-light-bg)">
         <Eyebrow color="var(--teal-dark)">Closing the loop</Eyebrow>
         <div className="landing-stats-grid">
@@ -241,13 +311,18 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      {/* Why LiftUp */}
+      {/* 5. THE SOLUTION — "LiftUp solves this by..." */}
       <Section background="var(--off-white)">
-        <div className="fade-in" style={{ textAlign: 'center', font: '800 32px var(--font-serif)', color: 'var(--text-dark)', marginBottom: 40 }}>
-          Why LiftUp
+        <Eyebrow color="var(--teal)">The solution</Eyebrow>
+        <div className="fade-in" style={{ textAlign: 'center', font: '800 30px var(--font-serif)', color: 'var(--text-dark)', maxWidth: 680, margin: '0 auto 16px' }}>
+          Putting that information in the volunteer&apos;s hands — before they ever leave the void deck
         </div>
-        <div className="landing-stats-grid">
-          {VALUE_PROPS.map((prop, i) => (
+        <div className="fade-in" style={{ textAlign: 'center', font: '700 14px var(--font-ui)', color: 'var(--text-mid)', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.55 }}>
+          And because giving earns points, badges, and a spot on the block leaderboard, residents keep coming
+          back — turning a one-off flyer drop into a habit.
+        </div>
+        <div className="landing-stats-grid landing-stats-grid--4">
+          {SOLUTION_PROPS.map((prop, i) => (
             <div key={prop.title} className="fade-in" style={{ animationDelay: `${i * 70}ms`, textAlign: 'center', padding: '0 16px' }}>
               <div style={{ width: 56, height: 56, borderRadius: 15, background: 'var(--amber-pale)', color: 'var(--amber-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
                 <Icon name={prop.icon} size={26} />

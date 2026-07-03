@@ -68,14 +68,13 @@ export default function NewCampaignPage() {
       onClick={() => name.trim() && setStep(2)}
       className="btn-primary"
       disabled={!name.trim()}
-      style={{ opacity: name.trim() ? 1 : 0.5 }}
     >
       Continue
     </button>
   ) : (
     <div style={{ display: 'flex', gap: 10 }}>
       <button type="button" onClick={() => setStep(1)} className="btn-ghost" style={{ flex: '0 0 100px' }}>Back</button>
-      <button type="submit" form="new-campaign-form" className="btn-primary" disabled={isSubmitting || categories.length === 0} style={{ flex: 1, opacity: isSubmitting || categories.length === 0 ? 0.7 : 1 }}>
+      <button type="submit" form="new-campaign-form" className="btn-primary" disabled={isSubmitting || categories.length === 0} style={{ flex: 1 }}>
         {isSubmitting ? 'Creating...' : 'Create Campaign'}
       </button>
     </div>
@@ -90,46 +89,49 @@ export default function NewCampaignPage() {
 
         <div style={{ display: step === 1 ? 'flex' : 'none', flexDirection: 'column', gap: 24 }}>
           <div>
-            <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>CAMPAIGN NAME</label>
+            <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Campaign name</label>
             <input
               name="name"
               value={name}
               onChange={e => setName(e.target.value)}
               required
               placeholder="e.g. Ramadan Clothing Drive"
-              style={{ width: '100%', boxSizing: 'border-box', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 16px var(--font-ui)', background: 'var(--canvas-bg)', outline: 'none' }}
+              className="input"
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>DESCRIPTION (OPTIONAL)</label>
+            <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Description (optional)</label>
             <textarea
               name="description"
               rows={3}
               placeholder="What is this campaign collecting, and who benefits?"
-              style={{ width: '100%', boxSizing: 'border-box', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 14px var(--font-ui)', background: 'var(--canvas-bg)', outline: 'none', resize: 'vertical' }}
+              className="input"
+              style={{ fontSize: 14, resize: 'vertical' }}
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-            <div>
-              <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>STARTS</label>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, minWidth: 0 }}>
+            <div style={{ minWidth: 0 }}>
+              <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Starts</label>
               <input
                 type="date"
                 name="starts_at"
                 defaultValue={todayIso()}
                 required
-                style={{ width: '100%', boxSizing: 'border-box', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 14px var(--font-ui)', background: 'var(--canvas-bg)', outline: 'none' }}
+                className="input"
+                style={{ minWidth: 0, maxWidth: '100%', padding: '14px 10px', fontSize: 14 }}
               />
             </div>
-            <div>
-              <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>ENDS</label>
+            <div style={{ minWidth: 0 }}>
+              <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Ends</label>
               <input
                 type="date"
                 name="ends_at"
                 defaultValue={plusDaysIso(30)}
                 required
-                style={{ width: '100%', boxSizing: 'border-box', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 14px var(--font-ui)', background: 'var(--canvas-bg)', outline: 'none' }}
+                className="input"
+                style={{ minWidth: 0, maxWidth: '100%', padding: '14px 10px', fontSize: 14 }}
               />
             </div>
           </div>
@@ -137,11 +139,11 @@ export default function NewCampaignPage() {
 
         <div style={{ display: step === 2 ? 'flex' : 'none', flexDirection: 'column', gap: 24 }}>
           <div>
-            <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>ACCEPTED CATEGORIES</label>
+            <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Accepted categories</label>
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
               {CATEGORY_OPTIONS.map(cat => (
                 <span key={cat} onClick={() => toggleCategory(cat)} className={`chip ${categories.includes(cat) ? 'selected' : ''}`}>
-                  {cat} {categories.includes(cat) && '✓'}
+                  {cat}
                 </span>
               ))}
             </div>
@@ -151,7 +153,7 @@ export default function NewCampaignPage() {
           </div>
 
           <div>
-            <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>TARGET AREA TYPE</label>
+            <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Target area type</label>
             <div style={{ display: 'flex', gap: 8 }}>
               <button
                 type="button"
@@ -172,8 +174,8 @@ export default function NewCampaignPage() {
 
           {areaMode === 'whole_area' && (
             <div style={{ background: 'var(--cream-bg)', padding: 16, borderRadius: 12 }}>
-              <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>SELECT TOWN / GRC</label>
-              <select name="area_reference" style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 16px var(--font-ui)', background: '#fff', outline: 'none' }}>
+              <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Select town / GRC</label>
+              <select name="area_reference" className="input" style={{ background: '#fff' }}>
                 {areaReferences.map(area => (
                   <option key={area} value={area}>{area.replace(/_/g, ' ')}</option>
                 ))}
@@ -183,7 +185,7 @@ export default function NewCampaignPage() {
 
           {(areaMode === 'multi_block' || areaMode === 'single_block') && (
             <div style={{ background: 'var(--cream-bg)', padding: 16, borderRadius: 12 }}>
-              <label style={{ display: 'block', font: '800 12px var(--font-ui)', color: 'var(--text-muted)', marginBottom: 8 }}>SELECT BLOCKS</label>
+              <label className="section-label" style={{ display: 'block', marginBottom: 8 }}>Select blocks</label>
               <div style={{ font: '700 14px var(--font-ui)', color: 'var(--text-mid)', marginBottom: 12 }}>
                 Search and add HDB blocks below.
               </div>
@@ -192,7 +194,8 @@ export default function NewCampaignPage() {
                   placeholder="Search block e.g. 214"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
-                  style={{ width: '100%', boxSizing: 'border-box', padding: '14px 16px', borderRadius: 12, border: '1px solid var(--input-border)', font: '700 16px var(--font-ui)', background: '#fff', outline: 'none' }}
+                  className="input"
+                  style={{ background: '#fff' }}
                 />
                 {search && (
                   <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid var(--card-border)', borderRadius: 12, marginTop: 4, maxHeight: 200, overflowY: 'auto', zIndex: 10 }}>
